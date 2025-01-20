@@ -1,0 +1,15 @@
+.footer {
+  margin-bottom: 24px;
+}
+
+.footer__paragraph {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.footer__date {
+  margin-left: auto;
+}

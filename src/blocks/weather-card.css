@@ -1,0 +1,16 @@
+.weather-card {
+  display: flex;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.weather-card__paragraph {
+  margin: 0;
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  color: #fff;
+  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+}

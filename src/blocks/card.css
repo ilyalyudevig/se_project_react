@@ -1,0 +1,27 @@
+.card {
+  box-sizing: border-box;
+  min-width: 325px;
+  height: 325px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: #e9e9e9;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 19px;
+}
+
+.card__title {
+  position: absolute;
+  margin: 15px 0 0;
+  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background-color: #fff;
+  opacity: 0.6;
+  padding: 2px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+}
+
+.card__image {
+  border-radius: 19px;
+}
