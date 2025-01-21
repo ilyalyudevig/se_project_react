@@ -1,18 +1,56 @@
+import { useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import ModalWithForm from './ModalWithForm';
 
 function App() {
+  const page = document.querySelector('.page');
+
+  const addGarmentModalName = 'garment-form';
+
+  const [activeModal, setActiveModal] = useState('');
+
+  page.addEventListener('keydown', handleEscapeClose);
+  page.addEventListener('click', handleOverlayClick);
+
+  function handleHeaderAddButtonClick() {
+    setActiveModal(addGarmentModalName);
+  }
+
+  function handleEscapeClose(e) {
+    if (e.key === 'Escape') {
+      onClose();
+    }
+  }
+
+  function handleOverlayClick(e) {
+    if (Array.from(e.target.classList).includes(`modal_type_${activeModal}`)) {
+      onClose();
+    }
+  }
+
+  function onClose() {
+    setActiveModal('');
+    page.removeEventListener('keydown', handleEscapeClose);
+    page.removeEventListener('click', handleOverlayClick);
+  }
+
+  function handleCardClick() {
+    console.log('card click');
+  }
+
   return (
     <>
-      <Header />
-      <Main weatherCard={'day-sunny'} />
+      <Header handleHeaderAddButtonClick={handleHeaderAddButtonClick} />
+      <Main weatherCard={'day-sunny'} handleCardClick={handleCardClick} />
       <Footer />
       <ModalWithForm
         title="New garment"
-        name="garment-form"
+        name={addGarmentModalName}
         buttonText="Add garment"
+        onClose={onClose}
+        activeModal={activeModal}
       >
         <label className="form__label" htmlFor="name">
           Name

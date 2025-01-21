@@ -24,4 +24,5 @@
 
 .card__image {
   border-radius: 20px;
+  cursor: pointer;
 }

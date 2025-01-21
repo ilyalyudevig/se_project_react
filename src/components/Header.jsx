@@ -1,7 +1,7 @@
 import headerLogo from '../images/logo.png';
 import userIcon from '../images/user-icon.png';
 
-function Header() {
+function Header({ handleHeaderAddButtonClick }) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
@@ -19,7 +19,11 @@ function Header() {
           </h1>
         </div>
         <div className="header__container">
-          <button className="header__button" type="button">
+          <button
+            className="header__button"
+            type="button"
+            onClick={() => handleHeaderAddButtonClick()}
+          >
             + Add clothes
           </button>
           <p className="header__username">Terrence Tegegne</p>
