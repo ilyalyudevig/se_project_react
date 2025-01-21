@@ -12,22 +12,22 @@
 .form__input-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 8px;
+  margin: 0 28px 8px;
 }
 
 .form__label {
-  margin-bottom: 8px;
+  margin: 0 28px 8px;
 }
 
 .form__input {
   border: none;
   border-bottom: 1px solid #000;
   padding: 0;
-  margin-bottom: 24px;
+  margin: 0 28px 24px;
 }
 
 .form__legend {
-  margin-bottom: 12px;
+  margin: 0 28px 12px;
 }
 
 .form__fieldset_radio {
@@ -54,5 +54,5 @@
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
-  margin-top: 24px;
+  margin: 24px 28px 36px;
 }

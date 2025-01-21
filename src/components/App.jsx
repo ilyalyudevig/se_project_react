@@ -3,13 +3,16 @@ import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import ModalWithForm from './ModalWithForm';
+import ItemModal from './ItemModal';
 
 function App() {
   const page = document.querySelector('.page');
 
   const addGarmentModalName = 'garment-form';
+  const itemModalName = 'item';
 
   const [activeModal, setActiveModal] = useState('');
+  const [item, setItem] = useState({ title: '', link: '' });
 
   page.addEventListener('keydown', handleEscapeClose);
   page.addEventListener('click', handleOverlayClick);
@@ -36,8 +39,15 @@ function App() {
     page.removeEventListener('click', handleOverlayClick);
   }
 
-  function handleCardClick() {
-    console.log('card click');
+  function handleCardClick(e) {
+    const title = e.currentTarget.querySelector('.card__title').textContent;
+    const link = e.currentTarget.querySelector('.card__image').src;
+
+    setActiveModal(itemModalName);
+    setItem({
+      title,
+      link,
+    });
   }
 
   return (
@@ -118,6 +128,14 @@ function App() {
           </div>
         </fieldset>
       </ModalWithForm>
+      <ItemModal
+        name={itemModalName}
+        activeModal={activeModal}
+        onClose={onClose}
+        title={item.title}
+        link={item.link}
+        weather={'cold'}
+      />
     </>
   );
 }
