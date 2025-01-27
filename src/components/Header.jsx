@@ -1,13 +1,11 @@
 import headerLogo from '../images/logo.png';
 import userIcon from '../images/user-icon.png';
 
-function Header({ handleHeaderAddButtonClick }) {
+function Header({ handleHeaderAddButtonClick, location }) {
   const currentDate = new Date().toLocaleString('default', {
     month: 'long',
     day: 'numeric',
   });
-
-  const location = 'Tel Aviv-Yafo';
 
   return (
     <>

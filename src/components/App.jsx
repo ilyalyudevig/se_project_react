@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import ModalWithForm from './ModalWithForm';
 import ItemModal from './ItemModal';
+import { getWeather } from '../utils/weatherApi';
+
+import { defaultClothingItems } from '../utils/defaultClothingItems';
+import { determineDayTime } from '../utils/determineDayTime';
 
 function App() {
   const page = document.querySelector('.page');
@@ -12,7 +16,9 @@ function App() {
   const itemModalName = 'item';
 
   const [activeModal, setActiveModal] = useState('');
-  const [item, setItem] = useState({ title: '', link: '' });
+  const [modalItem, setModalItem] = useState({});
+  const [weatherData, setWeatherData] = useState('');
+  const [items, setItems] = useState(defaultClothingItems);
 
   page.addEventListener('keydown', handleEscapeClose);
   page.addEventListener('click', handleOverlayClick);
@@ -40,20 +46,44 @@ function App() {
   }
 
   function handleCardClick(e) {
-    const title = e.currentTarget.querySelector('.card__title').textContent;
-    const link = e.currentTarget.querySelector('.card__image').src;
+    const id = Number(e.currentTarget.id);
+    const item = items.find((item) => item._id === id);
 
     setActiveModal(itemModalName);
-    setItem({
-      title,
-      link,
-    });
+
+    setModalItem(item);
   }
+
+  useEffect(() => {
+    getWeather()
+      .then((data) => setWeatherData(data))
+      .catch((err) => console.error('Error fetching weather data: ', err));
+  }, []);
+
+  const { sunrise, sunset, sky } = weatherData;
+  const currentTime = Math.floor(new Date().getTime() / 1000);
+  const isDayTime = determineDayTime(sunrise, sunset, currentTime);
+
+  const defaultWeatherCard = {
+    name: `${isDayTime ? 'Day' : 'Night'} ${sky}`,
+    image: new URL(
+      `../images/default-${isDayTime ? 'd' : 'n'}.png`,
+      import.meta.url
+    ).href,
+  };
 
   return (
     <>
-      <Header handleHeaderAddButtonClick={handleHeaderAddButtonClick} />
-      <Main weatherCard={'day-sunny'} handleCardClick={handleCardClick} />
+      <Header
+        handleHeaderAddButtonClick={handleHeaderAddButtonClick}
+        location={weatherData.location}
+      />
+      <Main
+        weatherCard={defaultWeatherCard}
+        handleCardClick={handleCardClick}
+        items={items.filter((item) => item.weather === weatherData.weather)}
+        temp={Math.round(weatherData.temp)}
+      />
       <Footer />
       <ModalWithForm
         title="New garment"
@@ -94,7 +124,7 @@ function App() {
             <input
               className="form__input form__input_radio"
               type="radio"
-              name="hot"
+              name="weather"
               id="hot"
               value="hot"
             />
@@ -106,7 +136,7 @@ function App() {
             <input
               className="form__input form__input_radio"
               type="radio"
-              name="warm"
+              name="weather"
               id="warm"
               value="warm"
             />
@@ -118,7 +148,7 @@ function App() {
             <input
               className="form__input form__input_radio"
               type="radio"
-              name="cold"
+              name="weather"
               id="cold"
               value="cold"
             />
@@ -132,9 +162,9 @@ function App() {
         name={itemModalName}
         activeModal={activeModal}
         onClose={onClose}
-        title={item.title}
-        link={item.link}
-        weather={'cold'}
+        title={modalItem.name}
+        link={modalItem.link}
+        weather={modalItem.weather}
       />
     </>
   );

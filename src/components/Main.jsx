@@ -1,16 +1,16 @@
 import ItemCard from './ItemCard';
 import WeatherCard from './WeatherCard';
 
-import { defaultClothingItems } from '../utils/defaultClothingItems';
-
-function Main({ weatherCard, handleCardClick }) {
+function Main({ weatherCard, handleCardClick, items, temp }) {
   return (
     <main className="content">
-      <WeatherCard weatherCard={weatherCard} />
+      <WeatherCard weatherCard={weatherCard} temp={temp} />
       <section className="cards">
-        <h2 className="cards__title">Today is 75° F / You may want to wear:</h2>
+        <h2 className="cards__title">
+          Today is {temp || '--'}°F / You may want to wear:
+        </h2>
         <div className="cards__container">
-          {defaultClothingItems.map((props) => (
+          {items.map((props) => (
             <ItemCard
               key={props._id}
               handleCardClick={handleCardClick}
