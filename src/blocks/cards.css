@@ -11,3 +11,9 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+@media screen and (max-width: 774px) {
+  .cards__container {
+    gap: 15px;
+  }
+}

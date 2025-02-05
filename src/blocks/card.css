@@ -1,6 +1,6 @@
 .card {
   box-sizing: border-box;
-  min-width: 325px;
+  width: 325px;
   height: 325px;
   position: relative;
   display: flex;
@@ -25,4 +25,20 @@
 .card__image {
   border-radius: 20px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 774px) {
+  .card {
+    width: 164px;
+    height: 164px;
+    border-radius: 12px;
+  }
+
+  .card__title {
+    font-size: 16px;
+    border: none;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 7px;
+  }
 }

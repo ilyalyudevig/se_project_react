@@ -1,8 +1,6 @@
-import {
-  OPEN_WEATHER_API_KEY as APIkey,
-  latitude,
-  longitude,
-} from './constants';
+import { OPEN_WEATHER_API_KEY as APIkey, coords } from './constants';
+
+const { latitude, longitude } = coords;
 
 function getWeather() {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}

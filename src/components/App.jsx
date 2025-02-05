@@ -9,6 +9,11 @@ import { getWeather } from '../utils/weatherApi';
 import { defaultClothingItems } from '../utils/defaultClothingItems';
 import { determineDayTime } from '../utils/determineDayTime';
 
+const itemModalLayoutOptions = {
+  vertical: 'v1',
+  horizontal: 'v2',
+};
+
 function App() {
   const page = document.querySelector('.page');
 
@@ -19,6 +24,11 @@ function App() {
   const [modalItem, setModalItem] = useState({});
   const [weatherData, setWeatherData] = useState('');
   const [items, setItems] = useState(defaultClothingItems);
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+
+  function toggleMobileMenu() {
+    setIsMobileMenuOpened(!isMobileMenuOpened);
+  }
 
   page.addEventListener('keydown', handleEscapeClose);
   page.addEventListener('click', handleOverlayClick);
@@ -46,11 +56,10 @@ function App() {
   }
 
   function handleCardClick(e) {
-    const id = Number(e.currentTarget.id);
+    const id = parseInt(e.currentTarget.id);
     const item = items.find((item) => item._id === id);
 
     setActiveModal(itemModalName);
-
     setModalItem(item);
   }
 
@@ -60,7 +69,7 @@ function App() {
       .catch((err) => console.error('Error fetching weather data: ', err));
   }, []);
 
-  const { sunrise, sunset, sky } = weatherData;
+  const { sunrise, sunset, sky, location, weather, temp } = weatherData;
   const currentTime = Math.floor(new Date().getTime() / 1000);
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
 
@@ -76,13 +85,15 @@ function App() {
     <>
       <Header
         handleHeaderAddButtonClick={handleHeaderAddButtonClick}
-        location={weatherData.location}
+        location={location}
+        toggleMobileMenu={toggleMobileMenu}
+        isMobileMenuOpened={isMobileMenuOpened}
       />
       <Main
         weatherCard={defaultWeatherCard}
         handleCardClick={handleCardClick}
-        items={items.filter((item) => item.weather === weatherData.weather)}
-        temp={Math.round(weatherData.temp)}
+        items={items.filter((item) => item.weather === weather)}
+        temp={Math.round(temp)}
       />
       <Footer />
       <ModalWithForm
@@ -165,6 +176,7 @@ function App() {
         title={modalItem.name}
         link={modalItem.link}
         weather={modalItem.weather}
+        layout={itemModalLayoutOptions.vertical}
       />
     </>
   );

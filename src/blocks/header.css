@@ -1,5 +1,4 @@
 .header {
-  height: 40px;
   margin: 32px 0 28px;
   display: flex;
   flex-direction: row;
@@ -20,7 +19,16 @@
   line-height: 1.2;
 }
 
-.header__button {
+.header__mobile-menu-button {
+  display: none;
+}
+
+.header__close-menu-button {
+  display: none;
+  padding: 0;
+}
+
+.header__add-button {
   padding: 0;
   border-style: none;
   background-color: transparent;
@@ -42,4 +50,116 @@
 
 .header__user-icon {
   margin-left: 88px;
+}
+
+@media screen and (max-width: 925px) {
+  .header__user-icon {
+    margin-left: 44px;
+  }
+}
+
+@media screen and (max-width: 795px) {
+  .header {
+    margin-top: 18px;
+  }
+
+  .header__container {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .header__logo {
+    width: 89px;
+  }
+
+  .header__date-location {
+    margin: 32px 0 0;
+  }
+
+  .header__container--hidden {
+    display: none;
+  }
+
+  .header__container--shown {
+    display: grid;
+    grid-template-rows: 60px 1fr 1fr 60px;
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    background-color: #fff;
+    left: 16px;
+    width: calc(100% - 32px);
+    height: 208px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .header__mobile-menu-button--hidden {
+    display: none;
+  }
+
+  .header__mobile-menu-button--shown {
+    display: flex;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    background-image: url('../images/hamburger-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 28px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .header__mobile-menu-button--shown:hover {
+    opacity: 0.6;
+  }
+
+  .header__close-menu-button--hidden {
+    display: none;
+  }
+
+  .header__close-menu-button--shown {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    top: 27px;
+    right: 27px;
+    border: none;
+    background-image: url('../images/close-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    background-color: transparent;
+    width: 21px;
+    height: 21px;
+  }
+
+  .header__close-menu-button--shown:hover {
+    opacity: 0.6;
+  }
+
+  .header__close-menu-button--shown:disabled {
+    opacity: 0.3;
+  }
+
+  .header__add-button {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+  }
+
+  .header__username {
+    grid-row: 2;
+    grid-column: 1;
+    width: max-content;
+  }
+
+  .header__user-icon {
+    grid-row: 2;
+    grid-column: 2;
+  }
 }
