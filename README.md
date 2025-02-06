@@ -1,8 +1,5 @@
-# React + Vite
+### wtwr° - full stack web app project for TripleTen web dev bootcamp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# About the Project
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**WTWR** is a full-stack web application that integrates with a Weather API to provide users with personalized clothing recommendations. By analyzing real-time weather data, WTWR suggests suitable attire for various conditions, ensuring users are appropriately dressed no matter the weather. As part of this project, the objective is to develop an engaging front end using the fundamental principles of React, focusing on delivering a seamless and user-friendly experience.
