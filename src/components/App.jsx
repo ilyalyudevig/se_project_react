@@ -8,7 +8,6 @@ import { getWeather } from "../utils/weatherApi";
 
 import { defaultClothingItems } from "../utils/defaultClothingItems";
 import { determineDayTime } from "../utils/determineDayTime";
-import { use } from "react";
 
 const itemModalLayoutOptions = {
   vertical: "v1",
