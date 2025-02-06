@@ -32,7 +32,7 @@
 .modal__close-button {
   width: 20px;
   height: 20px;
-  background-image: url('../images/close-icon.svg');
+  background-image: url("../images/close-icon.svg");
   background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
@@ -58,7 +58,7 @@
 }
 
 .modal__title_item {
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
   line-height: 1.2;
@@ -66,7 +66,7 @@
 }
 
 .modal__weather {
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
   line-height: 1.2;
@@ -86,7 +86,7 @@
 
 .modal__title_item-v2 {
   position: absolute;
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: bold;
   line-height: 1.2;
@@ -103,4 +103,15 @@
 .modal__weather_item-v2 {
   margin-left: 28px;
   margin-top: 12px;
+}
+
+@media screen and (max-width: 795px) {
+  .modal__container_type_item {
+    max-width: 343px;
+  }
+
+  .modal__container_type_garment-form {
+    align-self: end;
+    border-radius: 20px 20px 0 0;
+  }
 }

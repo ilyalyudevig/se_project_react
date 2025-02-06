@@ -1,44 +1,47 @@
-import { useState, useEffect } from 'react';
-import Footer from './Footer';
-import Header from './Header';
-import Main from './Main';
-import ModalWithForm from './ModalWithForm';
-import ItemModal from './ItemModal';
-import { getWeather } from '../utils/weatherApi';
+import { useState, useEffect } from "react";
+import Footer from "./Footer";
+import Header from "./Header";
+import Main from "./Main";
+import ModalWithForm from "./ModalWithForm";
+import ItemModal from "./ItemModal";
+import { getWeather } from "../utils/weatherApi";
 
-import { defaultClothingItems } from '../utils/defaultClothingItems';
-import { determineDayTime } from '../utils/determineDayTime';
+import { defaultClothingItems } from "../utils/defaultClothingItems";
+import { determineDayTime } from "../utils/determineDayTime";
+import { use } from "react";
 
 const itemModalLayoutOptions = {
-  vertical: 'v1',
-  horizontal: 'v2',
+  vertical: "v1",
+  horizontal: "v2",
 };
 
 function App() {
-  const page = document.querySelector('.page');
+  const page = document.querySelector(".page");
 
-  const addGarmentModalName = 'garment-form';
-  const itemModalName = 'item';
+  const addGarmentModalName = "garment-form";
+  const itemModalName = "item";
 
-  const [activeModal, setActiveModal] = useState('');
+  const [activeModal, setActiveModal] = useState("");
   const [modalItem, setModalItem] = useState({});
-  const [weatherData, setWeatherData] = useState('');
+  const [weatherData, setWeatherData] = useState("");
   const [items, setItems] = useState(defaultClothingItems);
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+  const [modalIsOpened, setModalIsOpened] = useState(false);
 
   function toggleMobileMenu() {
     setIsMobileMenuOpened(!isMobileMenuOpened);
   }
 
-  page.addEventListener('keydown', handleEscapeClose);
-  page.addEventListener('click', handleOverlayClick);
+  page.addEventListener("keydown", handleEscapeClose);
+  page.addEventListener("click", handleOverlayClick);
 
   function handleHeaderAddButtonClick() {
     setActiveModal(addGarmentModalName);
+    setModalIsOpened(true);
   }
 
   function handleEscapeClose(e) {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       onClose();
     }
   }
@@ -50,9 +53,11 @@ function App() {
   }
 
   function onClose() {
-    setActiveModal('');
-    page.removeEventListener('keydown', handleEscapeClose);
-    page.removeEventListener('click', handleOverlayClick);
+    setActiveModal("");
+    setIsMobileMenuOpened(false);
+    setModalIsOpened(false);
+    page.removeEventListener("keydown", handleEscapeClose);
+    page.removeEventListener("click", handleOverlayClick);
   }
 
   function handleCardClick(e) {
@@ -61,12 +66,13 @@ function App() {
 
     setActiveModal(itemModalName);
     setModalItem(item);
+    setModalIsOpened(true);
   }
 
   useEffect(() => {
     getWeather()
       .then((data) => setWeatherData(data))
-      .catch((err) => console.error('Error fetching weather data: ', err));
+      .catch((err) => console.error("Error fetching weather data: ", err));
   }, []);
 
   const { sunrise, sunset, sky, location, weather, temp } = weatherData;
@@ -74,9 +80,9 @@ function App() {
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
 
   const defaultWeatherCard = {
-    name: `${isDayTime ? 'Day' : 'Night'} ${sky}`,
+    name: `${isDayTime ? "Day" : "Night"} ${sky}`,
     image: new URL(
-      `../images/default-${isDayTime ? 'd' : 'n'}.png`,
+      `../images/default-${isDayTime ? "d" : "n"}.png`,
       import.meta.url
     ).href,
   };
@@ -88,6 +94,7 @@ function App() {
         location={location}
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpened={isMobileMenuOpened}
+        modalIsOpened={modalIsOpened}
       />
       <Main
         weatherCard={defaultWeatherCard}
