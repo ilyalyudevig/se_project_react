@@ -4,7 +4,6 @@
   flex-direction: column;
   height: 100vh;
   max-width: 1360px;
-  background-color: #f3f3f3;
 }
 
 @media screen and (max-width: 1440px) {

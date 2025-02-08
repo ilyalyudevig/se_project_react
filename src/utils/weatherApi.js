@@ -5,7 +5,12 @@ const { latitude, longitude } = coords;
 function getWeather() {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}
 `)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error ${res.status}`);
+    })
     .then(({ main, clouds, name, weather: conditions, sys }) => {
       const { temp } = main;
       const { main: sky } = conditions[0];

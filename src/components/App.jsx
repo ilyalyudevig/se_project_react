@@ -1,28 +1,26 @@
-import { useState, useEffect } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
-import Main from "./Main";
-import ModalWithForm from "./ModalWithForm";
-import ItemModal from "./ItemModal";
-import { getWeather } from "../utils/weatherApi";
+import { useState, useEffect } from 'react';
+import Footer from './Footer';
+import Header from './Header';
+import Main from './Main';
+import ModalWithForm from './ModalWithForm';
+import ItemModal from './ItemModal';
+import { getWeather } from '../utils/weatherApi';
 
-import { defaultClothingItems } from "../utils/defaultClothingItems";
-import { determineDayTime } from "../utils/determineDayTime";
+import { defaultClothingItems } from '../utils/defaultClothingItems';
+import { determineDayTime } from '../utils/determineDayTime';
 
 const itemModalLayoutOptions = {
-  vertical: "v1",
-  horizontal: "v2",
+  vertical: 'v1',
+  horizontal: 'v2',
 };
 
 function App() {
-  const page = document.querySelector(".page");
+  const addGarmentModalName = 'garment-form';
+  const itemModalName = 'item';
 
-  const addGarmentModalName = "garment-form";
-  const itemModalName = "item";
-
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState('');
   const [modalItem, setModalItem] = useState({});
-  const [weatherData, setWeatherData] = useState("");
+  const [weatherData, setWeatherData] = useState('');
   const [items, setItems] = useState(defaultClothingItems);
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [modalIsOpened, setModalIsOpened] = useState(false);
@@ -31,32 +29,40 @@ function App() {
     setIsMobileMenuOpened(!isMobileMenuOpened);
   }
 
-  page.addEventListener("keydown", handleEscapeClose);
-  page.addEventListener("click", handleOverlayClick);
+  function handleCloseModal() {
+    setActiveModal('');
+    setIsMobileMenuOpened(false);
+    setModalIsOpened(false);
+  }
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    function handleEscapeClose(e) {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    }
+    document.addEventListener('keydown', handleEscapeClose);
+
+    function handleOverlayClick(e) {
+      if (
+        Array.from(e.target.classList).includes(`modal_type_${activeModal}`)
+      ) {
+        handleCloseModal();
+      }
+    }
+    document.addEventListener('click', handleOverlayClick);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeClose);
+      document.removeEventListener('click', handleOverlayClick);
+    };
+  }, [activeModal]);
 
   function handleHeaderAddButtonClick() {
     setActiveModal(addGarmentModalName);
     setModalIsOpened(true);
-  }
-
-  function handleEscapeClose(e) {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  }
-
-  function handleOverlayClick(e) {
-    if (Array.from(e.target.classList).includes(`modal_type_${activeModal}`)) {
-      onClose();
-    }
-  }
-
-  function onClose() {
-    setActiveModal("");
-    setIsMobileMenuOpened(false);
-    setModalIsOpened(false);
-    page.removeEventListener("keydown", handleEscapeClose);
-    page.removeEventListener("click", handleOverlayClick);
   }
 
   function handleCardClick(e) {
@@ -71,7 +77,7 @@ function App() {
   useEffect(() => {
     getWeather()
       .then((data) => setWeatherData(data))
-      .catch((err) => console.error("Error fetching weather data: ", err));
+      .catch((err) => console.error('Error fetching weather data: ', err));
   }, []);
 
   const { sunrise, sunset, sky, location, weather, temp } = weatherData;
@@ -79,9 +85,9 @@ function App() {
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
 
   const defaultWeatherCard = {
-    name: `${isDayTime ? "Day" : "Night"} ${sky}`,
+    name: `${isDayTime ? 'Day' : 'Night'} ${sky}`,
     image: new URL(
-      `../images/default-${isDayTime ? "d" : "n"}.png`,
+      `../images/default-${isDayTime ? 'd' : 'n'}.png`,
       import.meta.url
     ).href,
   };
@@ -106,7 +112,7 @@ function App() {
         title="New garment"
         name={addGarmentModalName}
         buttonText="Add garment"
-        onClose={onClose}
+        handleCloseModal={handleCloseModal}
         activeModal={activeModal}
       >
         <label className="form__label" htmlFor="name">
@@ -116,6 +122,7 @@ function App() {
           className="form__input"
           type="text"
           name="name"
+          id="name"
           placeholder="Name"
           minLength="2"
           maxLength="40"
@@ -129,6 +136,7 @@ function App() {
           className="form__input"
           type="url"
           name="url"
+          id="url"
           placeholder="Image URL"
           minLength="2"
           maxLength="40"
@@ -178,7 +186,7 @@ function App() {
       <ItemModal
         name={itemModalName}
         activeModal={activeModal}
-        onClose={onClose}
+        handleCloseModal={handleCloseModal}
         title={modalItem.name}
         link={modalItem.link}
         weather={modalItem.weather}
