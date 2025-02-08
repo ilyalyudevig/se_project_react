@@ -27,7 +27,7 @@ function ItemModal({
             layout === 'v2' ? 'modal__image_item-v2' : ''
           }`}
           src={link}
-          alt={name}
+          alt={title}
         />
         <h2
           className={`modal__title ${
