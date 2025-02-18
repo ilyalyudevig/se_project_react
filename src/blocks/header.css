@@ -9,10 +9,12 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .header__date-location {
-  margin: 11px 5px 0 24px;
+  margin: 11px 0 5px 4px;
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
@@ -39,7 +41,6 @@
   font-size: 20px;
   font-weight: bold;
   line-height: 1.2;
-  margin-right: 20px;
   cursor: pointer;
 }
 
@@ -61,7 +62,7 @@
 }
 
 .header__user-icon {
-  margin-left: 88px;
+  margin-left: 12px;
 }
 
 @media screen and (max-width: 925px) {
@@ -76,8 +77,8 @@
   }
 
   .header__container {
-    flex-direction: column;
     position: relative;
+    gap: 12px;
   }
 
   .header__logo {
@@ -85,7 +86,11 @@
   }
 
   .header__date-location {
-    margin: 32px 0 0;
+    margin: 0;
+    font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.25;
   }
 
   .header__container--hidden {
@@ -94,16 +99,16 @@
 
   .header__container--shown {
     display: grid;
-    grid-template-rows: 60px 1fr 1fr 60px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 60px auto auto auto;
+    grid-template-columns: 1fr;
     position: absolute;
     background-color: #fff;
     left: 16px;
     width: calc(100% - 32px);
-    height: 208px;
     border-radius: 10px;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    gap: 0;
   }
 
   .header__mobile-menu-button--hidden {
@@ -161,13 +166,13 @@
 
   .header__add-button {
     grid-row: 3;
-    grid-column: 1 / span 2;
-    margin: 0;
+    grid-column: 1;
+    margin: 0 0 24px;
   }
 
   .header__user-info-container {
     grid-row: 2;
-    grid-column: 1 / span 2;
+    grid-column: 1;
     margin-bottom: 24px;
   }
 
@@ -179,7 +184,13 @@
 
   .header__user-icon {
     grid-row: 2;
-    grid-column: 2;
+    grid-column: 1;
     margin-left: 12px;
+  }
+
+  .header__toggle {
+    grid-row: 4;
+    grid-column: 1;
+    margin: 0 auto 40px;
   }
 }

@@ -1,0 +1,79 @@
+.toggle {
+  box-sizing: border-box;
+  width: 56px;
+  height: 28px;
+  border: 2px solid rgba(126, 126, 126, 1);
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle:hover {
+  border: 2px solid rgba(0, 0, 0, 1);
+}
+
+.toggle:hover .toggle__handle {
+  left: 0;
+}
+
+.toggle__input {
+  display: none;
+}
+
+.toggle__handle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle__input:checked ~ .toggle__handle {
+  left: calc(50% + 2px);
+}
+
+.toggle__input:checked ~ .toggle__labels-container .toggle__label_left {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.toggle__input:checked ~ .toggle__labels-container .toggle__label_right {
+  color: rgba(255, 255, 255, 1);
+}
+
+.toggle__labels-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 28px;
+  width: 56px;
+  position: relative;
+  left: -2px;
+  top: -2px;
+  z-index: 1;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.toggle__input:checked ~ .toggle__labels-container {
+  left: 0;
+}
+
+.toggle__label {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle__label_left {
+  color: rgba(255, 255, 255, 1);
+}
+
+.toggle__label_right {
+  color: rgba(0, 0, 0, 0.5);
+}

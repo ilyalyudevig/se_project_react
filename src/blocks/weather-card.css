@@ -10,14 +10,13 @@
 
 .weather-card__image {
   width: 1360px;
-  height: auto;
 }
 
 .weather-card__paragraph {
   margin: 0 16px 0;
   position: absolute;
   color: #fff;
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 36px;
   font-weight: bold;
   left: 0;
