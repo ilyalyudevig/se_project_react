@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
-import ModalWithForm from "./ModalWithForm";
 import ItemModal from "./ItemModal";
 import Profile from "./Profile";
 import AddItemModal from "./AddItemModal";
@@ -89,6 +88,19 @@ function App() {
     setModalIsOpened(true);
   }
 
+  function handleAddItemSubmit(name, imageUrl, weather) {
+    const id = items.length;
+    const newItem = {
+      _id: id,
+      name,
+      link: imageUrl,
+      weather,
+    };
+
+    setItems((prevItems) => [...prevItems, newItem]);
+    handleCloseModal();
+  }
+
   useEffect(() => {
     getWeather()
       .then((data) => setWeatherData(data))
@@ -149,81 +161,12 @@ function App() {
           />
         </Routes>
         <Footer />
-        <ModalWithForm
-          title="New garment"
-          name={addGarmentModalName}
-          buttonText="Add garment"
-          handleCloseModal={handleCloseModal}
+        <AddItemModal
+          isOpen={modalIsOpened}
+          onAddItem={handleAddItemSubmit}
+          onCloseModal={handleCloseModal}
           activeModal={activeModal}
-        >
-          <label className="form__label" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="form__input"
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Name"
-            minLength="2"
-            maxLength="40"
-            required=""
-            aria-label="Name"
-          />
-          <label className="form__label" htmlFor="url">
-            Image
-          </label>
-          <input
-            className="form__input"
-            type="url"
-            name="url"
-            id="url"
-            placeholder="Image URL"
-            minLength="2"
-            maxLength="40"
-            required=""
-            aria-label="Name"
-          />
-          <fieldset className="form__fieldset form__fieldset_radio">
-            <legend className="form__legend">Select the weather type:</legend>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_radio"
-                type="radio"
-                name="weather"
-                id="hot"
-                value="hot"
-              />
-              <label className="form__label form__label_radio" htmlFor="hot">
-                Hot
-              </label>
-            </div>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_radio"
-                type="radio"
-                name="weather"
-                id="warm"
-                value="warm"
-              />
-              <label className="form__label form__label_radio" htmlFor="warm">
-                Warm
-              </label>
-            </div>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_radio"
-                type="radio"
-                name="weather"
-                id="cold"
-                value="cold"
-              />
-              <label className="form__label form__label_radio" htmlFor="cold">
-                Cold
-              </label>
-            </div>
-          </fieldset>
-        </ModalWithForm>
+        />
         <ItemModal
           name={itemModalName}
           activeModal={activeModal}
