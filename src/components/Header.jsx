@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
+
 import headerLogo from "../images/logo.png";
 import userIcon from "../images/user-icon.png";
 
 import ToggleSwitch from "./ToggleSwitch";
+import AddItemButton from "./AddItemButton";
 
 function Header({
-  handleHeaderAddButtonClick,
+  handleAddItemsButtonClick,
   location,
   isMobileMenuOpened,
   toggleMobileMenu,
@@ -18,7 +21,9 @@ function Header({
   return (
     <header className={`header`}>
       <div className="header__container">
-        <img className="header__logo" src={headerLogo} alt="wtwr logo" />
+        <Link to={"/se_project_react/"}>
+          <img className="header__logo" src={headerLogo} alt="wtwr logo" />
+        </Link>
         <h1 className="header__date-location">
           {currentDate}, {location}
         </h1>
@@ -41,21 +46,21 @@ function Header({
         }`}
       >
         <ToggleSwitch />
-        <button
-          className="header__add-button"
-          type="button"
-          onClick={() => handleHeaderAddButtonClick()}
-        >
-          + Add clothes
-        </button>
-        <div className="header__user-info-container">
+        <AddItemButton
+          blockName={"header"}
+          onClick={handleAddItemsButtonClick}
+          buttonText={"+ Add clothes"}
+        />
+        <Link to={"/se_project_react/profile"} className="header__user-info">
+          {/* <div className="header__user-info-container"> */}
           <p className="header__username">Terrence Tegegne</p>
           <img
             className="header__user-icon"
             src={userIcon}
             alt="User profile picture"
           />
-        </div>
+          {/* </div> */}
+        </Link>
       </div>
     </header>
   );

@@ -1,6 +1,10 @@
-import { weatherCardImages } from '../utils/weatherCardImages';
+import { weatherCardImages } from "../utils/weatherCardImages";
+import { useContext } from "react";
+import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
 
 function WeatherCard({ weatherCard, temp }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
   const currentCard =
     weatherCardImages.find((item) => {
       return item.name === weatherCard.name;
@@ -13,7 +17,9 @@ function WeatherCard({ weatherCard, temp }) {
         src={currentCard.image}
         alt={currentCard.name}
       />
-      <p className="weather-card__paragraph">{temp || '--'}°F</p>
+      <p className="weather-card__paragraph">
+        {temp || "--"}°{currentTemperatureUnit}
+      </p>
     </section>
   );
 }

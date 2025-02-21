@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
 import ModalWithForm from "./ModalWithForm";
 import ItemModal from "./ItemModal";
+import Profile from "./Profile";
+import AddItemModal from "./AddItemModal";
+
 import { getWeather } from "../utils/weatherApi";
+
 import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
+import { UserProfileContext } from "../contexts/UserProfileContext";
 
 import { defaultClothingItems } from "../utils/defaultClothingItems";
 import { determineDayTime } from "../utils/determineDayTime";
@@ -68,7 +75,7 @@ function App() {
     };
   }, [activeModal]);
 
-  function handleHeaderAddButtonClick() {
+  function handleAddItemsButtonClick() {
     setActiveModal(addGarmentModalName);
     setModalIsOpened(true);
   }
@@ -89,6 +96,12 @@ function App() {
   }, []);
 
   const { sunrise, sunset, sky, location, weather, temp } = weatherData;
+
+  const temperature = {
+    F: Math.round(temp),
+    C: Math.round(((temp - 32) * 5) / 9),
+  };
+
   const currentTime = Math.floor(new Date().getTime() / 1000);
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
 
@@ -106,18 +119,35 @@ function App() {
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <Header
-          handleHeaderAddButtonClick={handleHeaderAddButtonClick}
+          handleAddItemsButtonClick={handleAddItemsButtonClick}
           location={location}
           toggleMobileMenu={toggleMobileMenu}
           isMobileMenuOpened={isMobileMenuOpened}
           modalIsOpened={modalIsOpened}
         />
-        <Main
-          weatherCard={defaultWeatherCard}
-          handleCardClick={handleCardClick}
-          items={items.filter((item) => item.weather === weather)}
-          temp={Math.round(temp)}
-        />
+        <Routes>
+          <Route
+            path="/se_project_react/"
+            element={
+              <Main
+                weatherCard={defaultWeatherCard}
+                handleCardClick={handleCardClick}
+                items={items.filter((item) => item.weather === weather)}
+                temp={temperature[currentTemperatureUnit]}
+              />
+            }
+          />
+          <Route
+            path="/se_project_react/profile"
+            element={
+              <UserProfileContext.Provider
+                value={{ items, handleCardClick, handleAddItemsButtonClick }}
+              >
+                <Profile />
+              </UserProfileContext.Provider>
+            }
+          />
+        </Routes>
         <Footer />
         <ModalWithForm
           title="New garment"

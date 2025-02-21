@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://ilyalyudevig.github.io/se_project_react/",
- 
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
@@ -15,7 +14,8 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.29.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
