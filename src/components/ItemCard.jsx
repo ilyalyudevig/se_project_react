@@ -1,4 +1,4 @@
-function ItemCard({ name, link, _id, handleCardClick }) {
+function ItemCard({ name, imageUrl, _id, handleCardClick }) {
   return (
     <div
       className="cards_card card"
@@ -6,7 +6,7 @@ function ItemCard({ name, link, _id, handleCardClick }) {
       id={_id}
     >
       <h2 className="card__title">{name}</h2>
-      <img className="card__image" src={link} alt={name} />
+      <img className="card__image" src={imageUrl} alt={name} />
     </div>
   );
 }

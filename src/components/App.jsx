@@ -7,13 +7,14 @@ import Main from "./Main";
 import ItemModal from "./ItemModal";
 import Profile from "./Profile";
 import AddItemModal from "./AddItemModal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 import { getWeather } from "../utils/weatherApi";
+import { api } from "../utils/api";
 
 import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
 import { UserProfileContext } from "../contexts/UserProfileContext";
 
-import { defaultClothingItems } from "../utils/defaultClothingItems";
 import { determineDayTime } from "../utils/determineDayTime";
 
 const itemModalLayoutOptions = {
@@ -24,11 +25,12 @@ const itemModalLayoutOptions = {
 function App() {
   const addGarmentModalName = "garment-form";
   const itemModalName = "item";
+  const deleteConfirmationModalName = "delete-confirm";
 
   const [activeModal, setActiveModal] = useState("");
   const [modalItem, setModalItem] = useState({});
   const [weatherData, setWeatherData] = useState("");
-  const [items, setItems] = useState(defaultClothingItems);
+  const [items, setItems] = useState([]);
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [modalIsOpened, setModalIsOpened] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -48,6 +50,15 @@ function App() {
     setIsMobileMenuOpened(false);
     setModalIsOpened(false);
   }
+
+  useEffect(() => {
+    api
+      .getUserItems()
+      .then((items) => setItems(items.reverse()))
+      .catch((err) =>
+        console.error("Error fetching user clothing items:", err)
+      );
+  }, []);
 
   useEffect(() => {
     if (!activeModal) return;
@@ -90,14 +101,36 @@ function App() {
 
   function handleAddItemSubmit(name, imageUrl, weather) {
     const id = items.length;
+
     const newItem = {
       _id: id,
       name,
-      link: imageUrl,
+      imageUrl,
       weather,
     };
 
-    setItems((prevItems) => [...prevItems, newItem]);
+    api
+      .addItem(newItem)
+      .then(() => setItems((prevItems) => [newItem, ...prevItems]))
+      .catch((err) => console.error("Error adding new item: ", err));
+    handleCloseModal();
+  }
+
+  function openConfirmationModal() {
+    setActiveModal(deleteConfirmationModalName);
+    setModalIsOpened(true);
+  }
+
+  function handleCardDelete() {
+    api
+      .deleteItem(modalItem._id)
+      .then(() => {
+        setItems((prevItems) =>
+          prevItems.filter((item) => item._id !== modalItem._id)
+        );
+      })
+      .catch((err) => console.error("Error removing item: ", err));
+
     handleCloseModal();
   }
 
@@ -166,15 +199,23 @@ function App() {
           onAddItem={handleAddItemSubmit}
           onCloseModal={handleCloseModal}
           activeModal={activeModal}
+          addGarmentModalName={addGarmentModalName}
         />
         <ItemModal
           name={itemModalName}
           activeModal={activeModal}
           handleCloseModal={handleCloseModal}
           title={modalItem.name}
-          link={modalItem.link}
+          imageUrl={modalItem.imageUrl}
           weather={modalItem.weather}
           layout={itemModalLayoutOptions.vertical}
+          openConfirmationModal={openConfirmationModal}
+        />
+        <DeleteConfirmationModal
+          name={deleteConfirmationModalName}
+          activeModal={activeModal}
+          handleCardDelete={handleCardDelete}
+          handleCloseModal={handleCloseModal}
         />
       </CurrentTemperatureUnitContext.Provider>
     </>

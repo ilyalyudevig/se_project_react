@@ -1,7 +1,7 @@
 function AddItemButton({ blockName, onClick, buttonText }) {
   return (
     <button
-      className={`${blockName}__add-button add-button`}
+      className={`${blockName}__add-button button`}
       type="button"
       onClick={onClick}
     >

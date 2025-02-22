@@ -30,6 +30,15 @@
   border-radius: 20px;
 }
 
+.modal__container_type_delete-confirm {
+  width: 670px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
 .modal__close-button {
   width: 20px;
   height: 20px;
@@ -53,9 +62,38 @@
   border-radius: 20px 20px 0 0;
 }
 
+.modal__title-container {
+  display: flex;
+}
+
 .modal__title {
   margin: 28px 28px 24px;
-  font-weight: bold;
+  color: #000;
+  font-family: "Cabinet Grotesk";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.modal__title_type_delete-confirm {
+  font-family: "Cabinet Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  width: 367px;
+  margin: 0;
+}
+
+.modal__delete-button {
+  color: #ff4d00;
+  margin: 20px 32px auto auto;
+}
+
+.modal__confirm-delete-button {
+  color: #ff4d00;
+  margin: 40px 0 24px;
 }
 
 .modal__title_item {

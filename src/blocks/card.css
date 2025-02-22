@@ -11,15 +11,16 @@
 }
 
 .card__title {
+  box-sizing: border-box;
   position: absolute;
   margin: 15px 0 0;
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-size: 16px;
   font-weight: bold;
   background-color: #fff;
-  opacity: 0.6;
   padding: 2px 12px;
-  border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 4px;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .card__image {

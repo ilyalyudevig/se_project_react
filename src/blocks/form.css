@@ -4,7 +4,7 @@
   border: none;
   padding: 0;
   margin: 0;
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-weight: bold;
   line-height: 1.25;
 }
@@ -57,7 +57,7 @@
 }
 
 .form__submit-button {
-  font-family: 'Cabinet Grotesk', Arial, Helvetica, sans-serif;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.25;
   font-weight: bold;
@@ -76,4 +76,32 @@
 
 .form__submit-button:disabled {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.form__confirm-text {
+  color: #000;
+  font-family: "Cabinet Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  width: 367px;
+}
+
+.form__submit-button_type_delete-confirm {
+  padding: 0;
+  border-style: none;
+  color: #ff4d00;
+  background-color: transparent;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.form__submit-button_type_delete-confirm:hover {
+  opacity: 0.6;
+  background-color: transparent;
 }

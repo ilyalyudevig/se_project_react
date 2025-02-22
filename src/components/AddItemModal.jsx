@@ -2,7 +2,13 @@ import ModalWithForm from "./ModalWithForm";
 
 import { useEffect, useState } from "react";
 
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal, activeModal }) => {
+const AddItemModal = ({
+  isOpen,
+  onAddItem,
+  onCloseModal,
+  activeModal,
+  addGarmentModalName,
+}) => {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
@@ -35,7 +41,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, activeModal }) => {
   return (
     <ModalWithForm
       title="New garment"
-      name={"garment-form"}
+      name={addGarmentModalName}
       buttonText="Add garment"
       handleCloseModal={onCloseModal}
       activeModal={activeModal}
@@ -82,6 +88,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, activeModal }) => {
             id="hot"
             value="hot"
             onChange={onWeatherChange}
+            checked={weather === "hot"}
           />
           <label className="form__label form__label_radio" htmlFor="hot">
             Hot
@@ -95,6 +102,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, activeModal }) => {
             id="warm"
             value="warm"
             onChange={onWeatherChange}
+            checked={weather === "warm"}
           />
           <label className="form__label form__label_radio" htmlFor="warm">
             Warm
@@ -108,6 +116,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, activeModal }) => {
             id="cold"
             value="cold"
             onChange={onWeatherChange}
+            checked={weather === "cold"}
           />
           <label className="form__label form__label_radio" htmlFor="cold">
             Cold
