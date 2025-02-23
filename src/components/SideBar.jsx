@@ -9,7 +9,13 @@ function SideBar() {
           src={userIcon}
           alt="User profile picture"
         />
-        <p className="sidebar__username">Terrence Tegegne</p>
+        <div className="sidebar__username-container">
+          <p className="sidebar__username">Terrence Tegegne</p>
+          <button className={"sidebar__profile-button button"}>
+            Changle profile data
+          </button>
+          <button className={"sidebar__profile-button button"}>Log out</button>
+        </div>
       </div>
     </div>
   );

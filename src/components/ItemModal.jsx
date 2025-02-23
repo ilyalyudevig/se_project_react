@@ -30,28 +30,42 @@ function ItemModal({
           src={imageUrl}
           alt={title}
         />
-        <div className="modal__title-container">
-          <h2
-            className={`modal__title ${
-              layout === "v2" ? "modal__title_item-v2" : "modal__title_item"
-            }`}
-          >
-            {title}
-          </h2>
-          <button
-            className="modal__delete-button button"
-            onClick={openConfirmationModal}
-          >
-            Delete item
-          </button>
-        </div>
-        <p
-          className={`modal__weather ${
-            layout === "v2" ? "modal__weather_item-v2" : ""
+        <div
+          className={`modal__info-container modal__info-container_item-${
+            layout === "v2" ? "v2" : "v1"
           }`}
         >
-          Weather: {weather}
-        </p>
+          <div
+            className={`modal__title-container modal__title-container_item-${
+              layout === "v2" ? "v2" : "v1"
+            }`}
+          >
+            <h2
+              className={`modal__title ${
+                layout === "v2"
+                  ? "modal__title_item-v2"
+                  : "modal__title_item-v1"
+              }`}
+            >
+              {title}
+            </h2>
+            <button
+              className={`modal__delete-button button ${
+                layout === "v2" ? "modal__delete-button_item-v2" : ""
+              }`}
+              onClick={openConfirmationModal}
+            >
+              Delete item
+            </button>
+          </div>
+          <p
+            className={`modal__weather ${
+              layout === "v2" ? "modal__weather_item-v2" : ""
+            }`}
+          >
+            Weather: {weather}
+          </p>
+        </div>
       </div>
     </div>
   );

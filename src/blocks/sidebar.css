@@ -15,3 +15,47 @@
   margin: 0 16px;
   white-space: nowrap;
 }
+
+.sidebar__profile-button {
+  display: none;
+}
+
+@media screen and (max-width: 795px) {
+  .sidebar__user-info {
+    align-items: start;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar__user-icon {
+    margin: 20px 20px auto 0;
+  }
+
+  .sidebar__username-container {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 20px 0;
+  }
+
+  .sidebar__username {
+    margin: 0 0 4px;
+    color: #000;
+    font-family: "Cabinet Grotesk";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .sidebar__profile-button {
+    display: flex;
+    margin: 8px 0 0;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: "Cabinet Grotesk";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
