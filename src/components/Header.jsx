@@ -51,15 +51,17 @@ function Header({
           onClick={handleAddItemsButtonClick}
           buttonText={"+ Add clothes"}
         />
-        <Link to={"/se_project_react/profile"} className="header__user-info">
-          {/* <div className="header__user-info-container"> */}
+        <Link
+          to={"/se_project_react/profile"}
+          onClick={toggleMobileMenu}
+          className="header__user-info"
+        >
           <p className="header__username">Terrence Tegegne</p>
           <img
             className="header__user-icon"
             src={userIcon}
             alt="User profile picture"
           />
-          {/* </div> */}
         </Link>
       </div>
     </header>

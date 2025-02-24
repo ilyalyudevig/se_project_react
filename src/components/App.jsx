@@ -42,7 +42,7 @@ function App() {
   };
 
   function toggleMobileMenu() {
-    setIsMobileMenuOpened(!isMobileMenuOpened);
+    setIsMobileMenuOpened((isMobileMenuOpened) => !isMobileMenuOpened);
   }
 
   function handleCloseModal() {
