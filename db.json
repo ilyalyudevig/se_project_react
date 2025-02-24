@@ -107,6 +107,18 @@
       "name": "Fur pants",
       "imageUrl": "https://shopakira.com/cdn/shop/files/24JWHJ7129-ABROWN-MULTI1.jpg?v=1727880714",
       "weather": "cold"
+    },
+    {
+      "_id": 19,
+      "name": "Jacques Cousteau",
+      "imageUrl": "https://unsplash.com/photos/brown-wooden-beach-lounge-chair-on-white-sand-near-sea-under-blue-sky-during-daytime-FPx_2yVY3-8",
+      "weather": "hot"
+    },
+    {
+      "_id": 20,
+      "name": "Fur hat",
+      "imageUrl": "https://www.henigfurs.com/cdn/shop/products/083A5163.jpg?v=1698272162",
+      "weather": "cold"
     }
   ]
 }

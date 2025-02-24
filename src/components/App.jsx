@@ -100,7 +100,7 @@ function App() {
   }
 
   function handleAddItemSubmit(name, imageUrl, weather) {
-    const id = items.length;
+    const id = items[0]._id + 1;
 
     const newItem = {
       _id: id,
