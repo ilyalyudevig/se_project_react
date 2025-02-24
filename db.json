@@ -95,6 +95,18 @@
       "name": "Sweatshirt",
       "weather": "warm",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sweatshirt.png?etag=008a9674757bea2e0bdb31242e364be0"
+    },
+    {
+      "_id": 16,
+      "name": "Fur coat",
+      "imageUrl": "https://kaufmanfurs.com/wp-content/uploads/2017/09/2019-02-19-18-30-55.jpg",
+      "weather": "cold"
+    },
+    {
+      "_id": 17,
+      "name": "Fur pants",
+      "imageUrl": "https://shopakira.com/cdn/shop/files/24JWHJ7129-ABROWN-MULTI1.jpg?v=1727880714",
+      "weather": "cold"
     }
   ]
 }

@@ -26,6 +26,7 @@
 .card__image {
   border-radius: 20px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 774px) {
