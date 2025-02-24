@@ -1,6 +1,8 @@
-import { OPEN_WEATHER_API_KEY as APIkey, coords } from './constants';
+import { OPEN_WEATHER_API_KEY as APIkey, coords } from "./constants";
 
 const { latitude, longitude } = coords;
+
+let temperature = {};
 
 function getWeather() {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}
@@ -15,7 +17,12 @@ function getWeather() {
       const { temp } = main;
       const { main: sky } = conditions[0];
       const { sunrise, sunset } = sys;
-      const weather = temp >= 86 ? 'hot' : temp >= 66 ? 'warm' : 'cold';
+      const weather = temp >= 86 ? "hot" : temp >= 66 ? "warm" : "cold";
+
+      temperature = {
+        F: Math.round(temp),
+        C: Math.round(((temp - 32) * 5) / 9),
+      };
 
       return {
         weather,
@@ -29,4 +36,4 @@ function getWeather() {
     });
 }
 
-export { getWeather };
+export { getWeather, temperature };

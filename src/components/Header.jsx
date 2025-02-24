@@ -21,7 +21,7 @@ function Header({
   return (
     <header className={`header`}>
       <div className="header__container">
-        <Link to={"/se_project_react/"}>
+        <Link to={"/"}>
           <img className="header__logo" src={headerLogo} alt="wtwr logo" />
         </Link>
         <h1 className="header__date-location">
@@ -52,7 +52,7 @@ function Header({
           buttonText={"+ Add clothes"}
         />
         <Link
-          to={"/se_project_react/profile"}
+          to={"/profile"}
           onClick={toggleMobileMenu}
           className="header__user-info"
         >

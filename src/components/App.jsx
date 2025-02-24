@@ -9,7 +9,7 @@ import Profile from "./Profile";
 import AddItemModal from "./AddItemModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
-import { getWeather } from "../utils/weatherApi";
+import { getWeather, temperature } from "../utils/weatherApi";
 import { api } from "../utils/api";
 
 import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
@@ -140,12 +140,7 @@ function App() {
       .catch((err) => console.error("Error fetching weather data: ", err));
   }, []);
 
-  const { sunrise, sunset, sky, location, weather, temp } = weatherData;
-
-  const temperature = {
-    F: Math.round(temp),
-    C: Math.round(((temp - 32) * 5) / 9),
-  };
+  const { sunrise, sunset, sky, location, weather } = weatherData;
 
   const currentTime = Math.floor(new Date().getTime() / 1000);
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
@@ -172,7 +167,7 @@ function App() {
         />
         <Routes>
           <Route
-            path="/se_project_react/"
+            path="/"
             element={
               <Main
                 weatherCard={defaultWeatherCard}
@@ -183,7 +178,7 @@ function App() {
             }
           />
           <Route
-            path="/se_project_react/profile"
+            path="/profile"
             element={
               <UserProfileContext.Provider
                 value={{ items, handleCardClick, handleAddItemsButtonClick }}
