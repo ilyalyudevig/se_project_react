@@ -109,15 +109,21 @@
       "weather": "cold"
     },
     {
-      "_id": 19,
-      "name": "Jacques Cousteau",
-      "imageUrl": "https://unsplash.com/photos/brown-wooden-beach-lounge-chair-on-white-sand-near-sea-under-blue-sky-during-daytime-FPx_2yVY3-8",
-      "weather": "hot"
-    },
-    {
-      "_id": 20,
+      "_id": 18,
       "name": "Fur hat",
       "imageUrl": "https://www.henigfurs.com/cdn/shop/products/083A5163.jpg?v=1698272162",
+      "weather": "cold"
+    },
+    {
+      "_id": 19,
+      "name": "Fur sliders",
+      "imageUrl": "https://media3.newlookassets.com/i/newlook/849448313/womens/clothing/nightwear/loungeable-cream-faux-fur-chunky-slider-slippers.jpg?strip=true&qlt=50&w=720",
+      "weather": "cold"
+    },
+    {
+      "_id": 21,
+      "name": "Fur mittens",
+      "imageUrl": "https://www.fursource.com/2152-large_default/rabbit-fur-mittens-brown-p-3489.webp",
       "weather": "cold"
     }
   ]

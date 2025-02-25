@@ -1,6 +1,7 @@
 import ModalWithForm from "./ModalWithForm";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "../hooks/useForm";
 
 const AddItemModal = ({
   isOpen,
@@ -9,33 +10,25 @@ const AddItemModal = ({
   activeModal,
   addGarmentModalName,
 }) => {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("");
+  const { values, setValues, handleChange } = useForm({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
 
   useEffect(() => {
     if (isOpen) {
-      setName("");
-      setImageUrl("");
-      setWeather("");
+      setValues(() => ({
+        name: "",
+        imageUrl: "",
+        weather: "",
+      }));
     }
-  }, [isOpen]);
-
-  const onNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const onImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
-  };
-
-  const onWeatherChange = (e) => {
-    setWeather(e.target.value);
-  };
+  }, [isOpen, setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddItem(name, imageUrl, weather);
+    onAddItem(values.name, values.imageUrl, values.weather);
   }
 
   return (
@@ -60,23 +53,23 @@ const AddItemModal = ({
         maxLength="40"
         required=""
         aria-label="Name"
-        value={name}
-        onChange={onNameChange}
+        value={values.name}
+        onChange={handleChange}
       />
-      <label className="form__label" htmlFor="url">
+      <label className="form__label" htmlFor="imageUrl">
         Image
       </label>
       <input
         className="form__input"
         type="url"
-        name="url"
-        id="url"
+        name="imageUrl"
+        id="imageUrl"
         placeholder="Image URL"
         minLength="2"
         required=""
         aria-label="Name"
-        value={imageUrl}
-        onChange={onImageUrlChange}
+        value={values.imageUrl}
+        onChange={handleChange}
       />
       <fieldset className="form__fieldset form__fieldset_radio">
         <legend className="form__legend">Select the weather type:</legend>
@@ -87,8 +80,8 @@ const AddItemModal = ({
             name="weather"
             id="hot"
             value="hot"
-            onChange={onWeatherChange}
-            checked={weather === "hot"}
+            onChange={handleChange}
+            checked={values.weather === "hot"}
           />
           <label className="form__label form__label_radio" htmlFor="hot">
             Hot
@@ -101,8 +94,8 @@ const AddItemModal = ({
             name="weather"
             id="warm"
             value="warm"
-            onChange={onWeatherChange}
-            checked={weather === "warm"}
+            onChange={handleChange}
+            checked={values.weather === "warm"}
           />
           <label className="form__label form__label_radio" htmlFor="warm">
             Warm
@@ -115,8 +108,8 @@ const AddItemModal = ({
             name="weather"
             id="cold"
             value="cold"
-            onChange={onWeatherChange}
-            checked={weather === "cold"}
+            onChange={handleChange}
+            checked={values.weather === "cold"}
           />
           <label className="form__label form__label_radio" htmlFor="cold">
             Cold
