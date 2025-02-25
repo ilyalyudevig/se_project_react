@@ -9,6 +9,7 @@ const AddItemModal = ({
   onCloseModal,
   activeModal,
   addGarmentModalName,
+  isLoading,
 }) => {
   const { values, setValues, handleChange } = useForm({
     name: "",
@@ -35,10 +36,11 @@ const AddItemModal = ({
     <ModalWithForm
       title="New garment"
       name={addGarmentModalName}
-      buttonText="Add garment"
+      buttonText={isLoading ? "Adding item..." : "Add garment"}
       handleCloseModal={onCloseModal}
       activeModal={activeModal}
       onSubmit={handleSubmit}
+      isOpen={isOpen}
     >
       <label className="form__label" htmlFor="name">
         Name

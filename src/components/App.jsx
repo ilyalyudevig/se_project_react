@@ -34,6 +34,7 @@ function App() {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [modalIsOpened, setModalIsOpened] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F"
@@ -52,38 +53,14 @@ function App() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
+
     api
       .getUserItems()
       .then((items) => setItems(items.reverse()))
-      .catch((err) =>
-        console.error("Error fetching user clothing items:", err)
-      );
+      .catch((err) => console.error("Error fetching user clothing items:", err))
+      .finally(() => setIsLoading(false));
   }, []);
-
-  useEffect(() => {
-    if (!activeModal) return;
-
-    function handleEscapeClose(e) {
-      if (e.key === "Escape") {
-        handleCloseModal();
-      }
-    }
-    document.addEventListener("keydown", handleEscapeClose);
-
-    function handleOverlayClick(e) {
-      if (
-        Array.from(e.target.classList).includes(`modal_type_${activeModal}`)
-      ) {
-        handleCloseModal();
-      }
-    }
-    document.addEventListener("click", handleOverlayClick);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
-      document.removeEventListener("click", handleOverlayClick);
-    };
-  }, [activeModal]);
 
   function handleAddItemsButtonClick() {
     setActiveModal(addGarmentModalName);
@@ -101,7 +78,6 @@ function App() {
 
   function handleAddItemSubmit(name, imageUrl, weather) {
     const id = items[0]._id + 1;
-
     const newItem = {
       _id: id,
       name,
@@ -109,11 +85,14 @@ function App() {
       weather,
     };
 
+    setIsLoading(true);
+
     api
       .addItem(newItem)
       .then(() => setItems((prevItems) => [newItem, ...prevItems]))
-      .catch((err) => console.error("Error adding new item: ", err));
-    handleCloseModal();
+      .then(() => handleCloseModal())
+      .catch((err) => console.error("Error adding new item: ", err))
+      .finally(() => setIsLoading(false));
   }
 
   function openConfirmationModal() {
@@ -122,6 +101,8 @@ function App() {
   }
 
   function handleCardDelete() {
+    setIsLoading(true);
+
     api
       .deleteItem(modalItem._id)
       .then(() => {
@@ -129,9 +110,9 @@ function App() {
           prevItems.filter((item) => item._id !== modalItem._id)
         );
       })
-      .catch((err) => console.error("Error removing item: ", err));
-
-    handleCloseModal();
+      .then(() => handleCloseModal())
+      .catch((err) => console.error("Error removing item: ", err))
+      .finally(() => setIsLoading(false));
   }
 
   useEffect(() => {
@@ -154,66 +135,68 @@ function App() {
   };
 
   return (
-    <>
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
-        <Header
-          handleAddItemsButtonClick={handleAddItemsButtonClick}
-          location={location}
-          toggleMobileMenu={toggleMobileMenu}
-          isMobileMenuOpened={isMobileMenuOpened}
-          modalIsOpened={modalIsOpened}
+    <CurrentTemperatureUnitContext.Provider
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+    >
+      <Header
+        handleAddItemsButtonClick={handleAddItemsButtonClick}
+        location={location}
+        toggleMobileMenu={toggleMobileMenu}
+        isMobileMenuOpened={isMobileMenuOpened}
+        modalIsOpened={modalIsOpened}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Main
+              weatherCard={defaultWeatherCard}
+              handleCardClick={handleCardClick}
+              items={items.filter((item) => item.weather === weather)}
+              temp={temperature[currentTemperatureUnit]}
+            />
+          }
         />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Main
-                weatherCard={defaultWeatherCard}
-                handleCardClick={handleCardClick}
-                items={items.filter((item) => item.weather === weather)}
-                temp={temperature[currentTemperatureUnit]}
-              />
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <UserProfileContext.Provider
-                value={{ items, handleCardClick, handleAddItemsButtonClick }}
-              >
-                <Profile />
-              </UserProfileContext.Provider>
-            }
-          />
-        </Routes>
-        <Footer />
-        <AddItemModal
-          isOpen={modalIsOpened}
-          onAddItem={handleAddItemSubmit}
-          onCloseModal={handleCloseModal}
-          activeModal={activeModal}
-          addGarmentModalName={addGarmentModalName}
+        <Route
+          path="/profile"
+          element={
+            <UserProfileContext.Provider
+              value={{ items, handleCardClick, handleAddItemsButtonClick }}
+            >
+              <Profile />
+            </UserProfileContext.Provider>
+          }
         />
-        <ItemModal
-          name={itemModalName}
-          activeModal={activeModal}
-          handleCloseModal={handleCloseModal}
-          title={modalItem.name}
-          imageUrl={modalItem.imageUrl}
-          weather={modalItem.weather}
-          layout={itemModalLayoutOptions.vertical}
-          openConfirmationModal={openConfirmationModal}
-        />
-        <DeleteConfirmationModal
-          name={deleteConfirmationModalName}
-          activeModal={activeModal}
-          handleCardDelete={handleCardDelete}
-          handleCloseModal={handleCloseModal}
-        />
-      </CurrentTemperatureUnitContext.Provider>
-    </>
+      </Routes>
+      <Footer />
+      <AddItemModal
+        isOpen={modalIsOpened}
+        onAddItem={handleAddItemSubmit}
+        onCloseModal={handleCloseModal}
+        activeModal={activeModal}
+        addGarmentModalName={addGarmentModalName}
+        isLoading={isLoading}
+        modalIsOpened={modalIsOpened}
+      />
+      <ItemModal
+        name={itemModalName}
+        activeModal={activeModal}
+        handleCloseModal={handleCloseModal}
+        title={modalItem.name}
+        imageUrl={modalItem.imageUrl}
+        weather={modalItem.weather}
+        layout={itemModalLayoutOptions.vertical}
+        openConfirmationModal={openConfirmationModal}
+        isOpen={modalIsOpened}
+      />
+      <DeleteConfirmationModal
+        name={deleteConfirmationModalName}
+        activeModal={activeModal}
+        handleCardDelete={handleCardDelete}
+        handleCloseModal={handleCloseModal}
+        isLoading={isLoading}
+      />
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 

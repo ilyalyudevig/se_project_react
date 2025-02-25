@@ -1,3 +1,5 @@
+import { useModalClose } from "../hooks/useModalClose";
+
 function ItemModal({
   activeModal,
   name,
@@ -7,7 +9,10 @@ function ItemModal({
   handleCloseModal,
   openConfirmationModal,
   layout,
+  isOpen,
 }) {
+  useModalClose(isOpen, handleCloseModal);
+
   return (
     <div
       className={`modal modal_type_${name} ${

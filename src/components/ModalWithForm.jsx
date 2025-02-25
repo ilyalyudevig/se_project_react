@@ -1,3 +1,5 @@
+import { useModalClose } from "../hooks/useModalClose";
+
 function ModalWithForm({
   title,
   name,
@@ -6,7 +8,10 @@ function ModalWithForm({
   activeModal,
   onSubmit,
   children,
+  isOpen,
 }) {
+  useModalClose(isOpen, handleCloseModal);
+
   return (
     <div
       className={`modal modal_type_${name} ${

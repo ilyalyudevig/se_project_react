@@ -125,6 +125,12 @@
       "name": "Fur mittens",
       "imageUrl": "https://www.fursource.com/2152-large_default/rabbit-fur-mittens-brown-p-3489.webp",
       "weather": "cold"
+    },
+    {
+      "_id": 24,
+      "name": "Shorts",
+      "imageUrl": "https://bfasset.costco-static.com/U447IH35/as/26mzh43vbtc825rjv4rqxmt/4000286351-847_blue_1?auto=webp&format=jpg&width=350&height=350&fit=bounds&canvas=350,350",
+      "weather": "warm"
     }
   ]
 }
