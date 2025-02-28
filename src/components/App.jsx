@@ -176,7 +176,6 @@ function App() {
         activeModal={activeModal}
         addGarmentModalName={addGarmentModalName}
         isLoading={isLoading}
-        modalIsOpened={modalIsOpened}
       />
       <ItemModal
         name={itemModalName}
@@ -195,6 +194,7 @@ function App() {
         handleCardDelete={handleCardDelete}
         handleCloseModal={handleCloseModal}
         isLoading={isLoading}
+        isOpen={modalIsOpened}
       />
     </CurrentTemperatureUnitContext.Provider>
   );

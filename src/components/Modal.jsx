@@ -1,30 +1,13 @@
-import { useEffect } from "react";
+import { useModalClose } from "../hooks/useModalClose";
 
-function Modal({ name, onClose, activeModal, layout, children }) {
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [onClose]);
-
-  const handleOverlay = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+function Modal({ name, isOpen, onClose, activeModal, layout, children }) {
+  useModalClose(isOpen, onClose);
 
   return (
     <div
       className={`modal modal_type_${name} ${
         activeModal === name ? "modal_opened" : ""
       }`}
-      onClick={handleOverlay}
     >
       <div
         className={`modal__container modal__container_type_${name} ${

@@ -4,6 +4,7 @@ import Form from "./Form";
 function ModalWithForm({
   title,
   name,
+  isOpen,
   buttonText,
   handleCloseModal,
   activeModal,
@@ -11,7 +12,12 @@ function ModalWithForm({
   children,
 }) {
   return (
-    <Modal name={name} onClose={handleCloseModal} activeModal={activeModal}>
+    <Modal
+      name={name}
+      onClose={handleCloseModal}
+      activeModal={activeModal}
+      isOpen={isOpen}
+    >
       <h2 className="modal__title">{title}</h2>
       <Form name={name} onSubmit={onSubmit} buttonText={buttonText}>
         <fieldset className="form__fieldset">{children}</fieldset>
