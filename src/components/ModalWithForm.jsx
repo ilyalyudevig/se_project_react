@@ -1,4 +1,5 @@
 import Modal from "./Modal";
+import Form from "./Form";
 
 function ModalWithForm({
   title,
@@ -12,7 +13,7 @@ function ModalWithForm({
   return (
     <Modal name={name} onClose={handleCloseModal} activeModal={activeModal}>
       <h2 className="modal__title">{title}</h2>
-      <form className="modal__form form" name={name} onSubmit={onSubmit}>
+      <Form name={name} onSubmit={onSubmit} buttonText={buttonText}>
         <fieldset className="form__fieldset">{children}</fieldset>
         <button
           className={`form__submit-button form__submit-button_type_${name}`}
@@ -21,7 +22,7 @@ function ModalWithForm({
         >
           {buttonText}
         </button>
-      </form>
+      </Form>
     </Modal>
   );
 }

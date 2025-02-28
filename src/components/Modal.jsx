@@ -26,19 +26,16 @@ function Modal({ name, onClose, activeModal, layout, children }) {
       }`}
       onClick={handleOverlay}
     >
-      {/* the container for the contents */}
       <div
         className={`modal__container modal__container_type_${name} ${
           layout === "v2" ? "modal__container_item-v2" : ""
         }`}
       >
-        {/* add the close button */}
         <button
           className="modal__close-button"
           type="button"
           onClick={onClose}
         />
-        {/* here will be anything you add as `children`*/}
         {children}
       </div>
     </div>

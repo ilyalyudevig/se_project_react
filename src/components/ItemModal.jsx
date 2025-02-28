@@ -17,7 +17,6 @@ function ItemModal({
       activeModal={activeModal}
       layout={layout}
     >
-      {" "}
       <img
         className={`modal__image ${
           layout === "v2" ? "modal__image_item-v2" : ""
