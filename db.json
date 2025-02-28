@@ -115,21 +115,15 @@
       "weather": "cold"
     },
     {
-      "_id": 19,
-      "name": "Fur sliders",
-      "imageUrl": "https://media3.newlookassets.com/i/newlook/849448313/womens/clothing/nightwear/loungeable-cream-faux-fur-chunky-slider-slippers.jpg?strip=true&qlt=50&w=720",
-      "weather": "cold"
-    },
-    {
       "_id": 21,
       "name": "Fur mittens",
       "imageUrl": "https://www.fursource.com/2152-large_default/rabbit-fur-mittens-brown-p-3489.webp",
       "weather": "cold"
     },
     {
-      "_id": 24,
-      "name": "Shorts",
-      "imageUrl": "https://bfasset.costco-static.com/U447IH35/as/26mzh43vbtc825rjv4rqxmt/4000286351-847_blue_1?auto=webp&format=jpg&width=350&height=350&fit=bounds&canvas=350,350",
+      "_id": 25,
+      "name": "Tactical boots",
+      "imageUrl": "https://sfgear.net/cdn/shop/files/L40943400_e66f9c9328e3c929986d764e4c353f4b2-1024x1024.png?v=1731248811&width=1646",
       "weather": "warm"
     }
   ]
