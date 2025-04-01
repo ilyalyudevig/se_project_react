@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 
 import headerLogo from "../images/logo.png";
-import userIcon from "../images/user-icon.png";
 
 import ToggleSwitch from "./ToggleSwitch";
-import AddItemButton from "./AddItemButton";
+import Button from "./Button";
+import UserIcon from "./UserIcon";
+
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Header({
+  openSignUpModal,
+  openSignInModal,
   handleAddItemsButtonClick,
   location,
   isMobileMenuOpened,
@@ -18,11 +23,13 @@ function Header({
     day: "numeric",
   });
 
+  const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
+
   return (
     <header className={`header`}>
       <div className="header__container">
-        <Link to={"/"}>
-          <img className="header__logo" src={headerLogo} alt="wtwr logo" />
+        <Link to={"/"} className="header__logo">
+          <img src={headerLogo} alt="wtwr logo" />
         </Link>
         <h1 className="header__date-location">
           {currentDate}, {location}
@@ -46,23 +53,42 @@ function Header({
         }`}
       >
         <ToggleSwitch />
-        <AddItemButton
-          blockName={"header"}
-          onClick={handleAddItemsButtonClick}
-          buttonText={"+ Add clothes"}
-        />
-        <Link
-          to={"/profile"}
-          onClick={toggleMobileMenu}
-          className="header__user-info"
-        >
-          <p className="header__username">Terrence Tegegne</p>
-          <img
-            className="header__user-icon"
-            src={userIcon}
-            alt="User profile picture"
-          />
-        </Link>
+        {isLoggedIn ? (
+          <>
+            <Button
+              block={"header"}
+              onClick={handleAddItemsButtonClick}
+              buttonText={"+ Add clothes"}
+            />
+            <Link
+              to={"/profile"}
+              onClick={toggleMobileMenu}
+              className="header__user-info"
+            >
+              <p className="header__username">{currentUser.name}</p>
+              <UserIcon
+                block={"header"}
+                avatar={currentUser.avatar}
+                name={currentUser.name}
+              />
+            </Link>
+          </>
+        ) : (
+          <>
+            <Button
+              block={"header"}
+              type={"signup"}
+              onClick={openSignUpModal}
+              buttonText={"Sign Up"}
+            />
+            <Button
+              block={"header"}
+              type={"signin"}
+              onClick={openSignInModal}
+              buttonText={"Log In"}
+            />
+          </>
+        )}
       </div>
     </header>
   );

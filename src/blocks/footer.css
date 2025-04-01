@@ -1,5 +1,5 @@
 .footer {
-  margin: 0;
+  margin: 24px 0;
 }
 
 .footer__paragraph {
@@ -7,7 +7,7 @@
   justify-content: space-between;
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   line-height: 1.2;
-  margin-top: 24px;
+  margin: 0;
 }
 
 .footer__date {

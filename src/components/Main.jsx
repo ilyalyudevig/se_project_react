@@ -3,7 +3,7 @@ import WeatherCard from "./WeatherCard";
 import { useContext } from "react";
 import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherCard, handleCardClick, items, temp }) {
+function Main({ weatherCard, handleCardClick, items, temp, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   return (
@@ -15,11 +15,12 @@ function Main({ weatherCard, handleCardClick, items, temp }) {
           wear:
         </h2>
         <div className="cards__container">
-          {items.map((props) => (
+          {items.map((item) => (
             <ItemCard
-              key={props._id}
+              key={item._id}
+              item={item}
               handleCardClick={handleCardClick}
-              {...props}
+              onCardLike={onCardLike}
             />
           ))}
         </div>

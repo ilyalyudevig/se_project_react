@@ -5,4 +5,6 @@ const coords = {
   longitude: 34.7818,
 };
 
-export { OPEN_WEATHER_API_KEY, coords };
+const baseUrl = "http://localhost:3001";
+
+export { OPEN_WEATHER_API_KEY, coords, baseUrl };

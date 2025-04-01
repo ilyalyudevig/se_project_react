@@ -10,17 +10,47 @@
   border-radius: 20px;
 }
 
-.card__title {
-  box-sizing: border-box;
+.card__title-like-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   margin: 15px 0 0;
+  gap: 10px;
+}
+
+.card__title {
+  box-sizing: border-box;
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: bold;
   background-color: #fff;
   padding: 2px 12px;
+  margin: 0;
   border-radius: 4px;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.card__like-button {
+  background-image: url("../images/like-icon.svg");
+  width: 20px;
+  height: 18px;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.card__like-button_checked {
+  background-image: url("../images/like-icon-filled.svg");
+}
+
+.card__like-button:hover {
+  opacity: 0.6;
 }
 
 .card__image {

@@ -1,15 +1,19 @@
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 import Modal from "./Modal";
 
 function ItemModal({
   activeModal,
   name,
-  title,
-  imageUrl,
-  weather,
+  item,
   handleCloseModal,
   openConfirmationModal,
   layout,
 }) {
+  const { currentUser } = useContext(CurrentUserContext);
+  const isOwn = item.owner === currentUser._id;
+
   return (
     <Modal
       name={name}
@@ -21,8 +25,8 @@ function ItemModal({
         className={`modal__image ${
           layout === "v2" ? "modal__image_item-v2" : ""
         }`}
-        src={imageUrl}
-        alt={title}
+        src={item.imageUrl}
+        alt={item.title}
       />
       <div
         className={`modal__info-container modal__info-container_item-${
@@ -39,23 +43,25 @@ function ItemModal({
               layout === "v2" ? "modal__title_item-v2" : "modal__title_item-v1"
             }`}
           >
-            {title}
+            {item.name}
           </h2>
-          <button
-            className={`modal__delete-button button ${
-              layout === "v2" ? "modal__delete-button_item-v2" : ""
-            }`}
-            onClick={openConfirmationModal}
-          >
-            Delete item
-          </button>
+          {isOwn && (
+            <button
+              className={`modal__delete-button button ${
+                layout === "v2" ? "modal__delete-button_item-v2" : ""
+              }`}
+              onClick={openConfirmationModal}
+            >
+              Delete item
+            </button>
+          )}
         </div>
         <p
           className={`modal__weather ${
             layout === "v2" ? "modal__weather_item-v2" : ""
           }`}
         >
-          Weather: {weather}
+          Weather: {item.weather}
         </p>
       </div>
     </Modal>
