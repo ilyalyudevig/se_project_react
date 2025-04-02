@@ -15,10 +15,11 @@ function ClothesSection() {
       <div className="clothes-section__title-container">
         <h2 className="clothes-section__title">Your items</h2>
         <Button
-          block={"clothes-section"}
-          type={"add"}
+          block="clothes-section"
+          element="add"
+          type="button"
           onClick={handleAddItemsButtonClick}
-          buttonText={"+ Add new"}
+          buttonText="+ Add new"
         />
       </div>
       <div className="clothes-section__cards cards">

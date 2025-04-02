@@ -56,9 +56,11 @@ function Header({
         {isLoggedIn ? (
           <>
             <Button
-              block={"header"}
+              block="header"
+              element="add-item"
+              type="button"
               onClick={handleAddItemsButtonClick}
-              buttonText={"+ Add clothes"}
+              buttonText="+ Add clothes"
             />
             <Link
               to={"/profile"}
@@ -76,16 +78,18 @@ function Header({
         ) : (
           <>
             <Button
-              block={"header"}
-              type={"signup"}
+              block="header"
+              element="signup"
+              type="button"
               onClick={openSignUpModal}
-              buttonText={"Sign Up"}
+              buttonText="Sign Up"
             />
             <Button
-              block={"header"}
-              type={"signin"}
+              block="header"
+              element="signin"
+              type="button"
               onClick={openSignInModal}
-              buttonText={"Log In"}
+              buttonText="Log In"
             />
           </>
         )}

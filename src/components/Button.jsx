@@ -1,8 +1,8 @@
-function Button({ block, type, onClick, buttonText }) {
+function Button({ block, element, type = "submit", onClick, buttonText }) {
   return (
     <button
-      className={`${block}__${type}-button button`}
-      type="button"
+      className={`${block}__${element}-button button`}
+      type={type}
       onClick={onClick}
     >
       {buttonText}

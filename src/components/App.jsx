@@ -9,6 +9,8 @@ import Profile from "./Profile";
 import AddItemModal from "./AddItemModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import RegisterModal from "./RegisterModal";
+import LoginModal from "./LoginModal";
+import EditProfileModal from "./EditProfileModal";
 
 import { getWeather, temperature } from "../utils/weatherApi";
 import { api } from "../utils/api";
@@ -21,22 +23,10 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import { determineDayTime } from "../utils/determineDayTime";
 import ProtectedRoute from "./ProtectedRoute";
-import LoginModal from "./LoginModal";
-import EditProfileModal from "./EditProfileModal";
 
-const itemModalLayoutOptions = {
-  vertical: "v1",
-  horizontal: "v2",
-};
+import { MODAL_NAMES, ITEM_MODAL_LAYOUT_OPTIONS } from "../utils/constants";
 
 function App() {
-  const addGarmentModalName = "garment-form";
-  const itemModalName = "item";
-  const deleteConfirmationModalName = "delete-confirm";
-  const registerModalName = "signup-form";
-  const loginModalName = "login-form";
-  const editProfileModalName = "edit-profile-form";
-
   const [activeModal, setActiveModal] = useState("");
   const [modalItem, setModalItem] = useState({});
   const [weatherData, setWeatherData] = useState("");
@@ -49,37 +39,36 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const handleToggleSwitchChange = () => {
-    currentTemperatureUnit === "F"
-      ? setCurrentTemperatureUnit("C")
-      : setCurrentTemperatureUnit("F");
+    setCurrentTemperatureUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
   };
 
-  function toggleMobileMenu() {
-    setIsMobileMenuOpened((isMobileMenuOpened) => !isMobileMenuOpened);
-  }
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpened((prevState) => !prevState);
+  };
 
-  function handleCloseModal() {
+  const handleCloseModal = () => {
     setActiveModal("");
     setIsMobileMenuOpened(false);
     setModalIsOpened(false);
-  }
+  };
+
+  const openModal = (modalName) => {
+    setActiveModal(modalName);
+    setModalIsOpened(true);
+  };
 
   const handleRegistration = ({ email, password, name, avatarUrl }) => {
     auth
       .register(email, password, name, avatarUrl)
       .then(() => handleLogin({ email, password }))
-      .then(() => handleCloseModal())
+      .then(handleCloseModal)
       .catch(console.error);
   };
 
   const handleLogin = ({ email, password }) => {
+    if (!email || !password) return;
+
     setIsLoading(true);
-
-    if (!email || !password) {
-      setIsLoading(false);
-      return;
-    }
-
     auth
       .authorize(email, password)
       .then((data) => {
@@ -92,8 +81,8 @@ function App() {
         setCurrentUser(user);
         setIsLoggedIn(true);
       })
-      .then(() => handleCloseModal())
-      .catch((err) => console.error(err))
+      .then(handleCloseModal)
+      .catch(console.error)
       .finally(() => setIsLoading(false));
   };
 
@@ -102,35 +91,24 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  function handleAddItemsButtonClick() {
-    setActiveModal(addGarmentModalName);
-    setModalIsOpened(true);
-  }
+  const handleAddItemsButtonClick = () => {
+    openModal(MODAL_NAMES.ADD_GARMENT);
+  };
 
-  function handleAddItemSubmit(name, imageUrl, weather) {
+  const handleAddItemSubmit = (name, imageUrl, weather) => {
     const token = getToken();
-
     setIsLoading(true);
 
     api
-      .addItem(
-        {
-          name,
-          imageUrl,
-          weather,
-          likes: [],
-        },
-        token
-      )
+      .addItem({ name, imageUrl, weather, likes: [] }, token)
       .then((newItem) => setItems((prevItems) => [newItem, ...prevItems]))
-      .then(() => handleCloseModal())
-      .catch((err) => console.error("Error adding new item: ", err))
+      .then(handleCloseModal)
+      .catch(console.error)
       .finally(() => setIsLoading(false));
-  }
+  };
 
-  function handleCardDelete() {
+  const handleCardDelete = () => {
     const token = getToken();
-
     setIsLoading(true);
 
     api
@@ -140,98 +118,75 @@ function App() {
           prevItems.filter((item) => item._id !== modalItem._id)
         );
       })
-      .then(() => handleCloseModal())
-      .catch((err) => console.error("Error removing item: ", err))
+      .then(handleCloseModal)
+      .catch(console.error)
       .finally(() => setIsLoading(false));
-  }
+  };
 
-  function handleEditProfile({ name, avatar }) {
+  const handleEditProfile = ({ name, avatar }) => {
     const token = getToken();
     setIsLoading(true);
 
     api
       .editProfile(token, { name, avatar })
       .then((user) => setCurrentUser(user))
-      .then(() => handleCloseModal())
-      .catch((err) => console.error("Error removing item: ", err))
+      .then(handleCloseModal)
+      .catch(console.error)
       .finally(() => setIsLoading(false));
-  }
+  };
 
-  function handleCardClick(e) {
+  const handleCardClick = (e) => {
     const id = e.currentTarget.id;
     const item = items.find((item) => item._id === id);
-    setActiveModal(itemModalName);
+    setActiveModal(MODAL_NAMES.ITEM);
     setModalItem(item);
     setModalIsOpened(true);
-  }
+  };
 
-  function handleCardLike({ id, isLiked }) {
+  const handleCardLike = ({ id, isLiked }) => {
     const token = getToken();
-    !isLiked
-      ? api
-          .addCardLike(id, token)
-          .then((updatedCard) => {
-            setItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
-          })
-          .catch((err) => console.log(err))
-      : api
-          .removeCardLike(id, token)
-          .then((updatedCard) => {
-            setItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
-          })
-          .catch((err) => console.log(err));
-  }
-
-  function openModal(modalName) {
-    setActiveModal(modalName);
-    setModalIsOpened(true);
-  }
+    const likeAction = !isLiked
+      ? api.addCardLike(id, token)
+      : api.removeCardLike(id, token);
+    likeAction
+      .then((updatedCard) => {
+        setItems((cards) =>
+          cards.map((item) => (item._id === id ? updatedCard : item))
+        );
+      })
+      .catch(console.error);
+  };
 
   useEffect(() => {
-    setIsLoading(true);
     const token = getToken();
+    if (!token) return;
 
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
-
+    setIsLoading(true);
     auth
       .checkToken(token)
       .then((user) => {
         setCurrentUser(user);
         setIsLoggedIn(true);
       })
-      .catch((err) => console.error(err))
+      .catch(console.error)
       .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
-
     api
       .getUserItems()
-      .then(({ items }) => Array.from(items))
-      .then((items) => {
-        setItems(items.reverse());
-      })
-      .catch((err) => console.error("Error fetching user clothing items:", err))
+      .then(({ items }) => setItems(items.reverse()))
+      .catch(console.error)
       .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
-    getWeather()
-      .then((data) => setWeatherData(data))
-      .catch((err) => console.error("Error fetching weather data: ", err));
+    getWeather().then(setWeatherData).catch(console.error);
   }, []);
 
   const { sunrise, sunset, sky, location, weather } = weatherData;
-
-  const currentTime = Math.floor(new Date().getTime() / 1000);
+  const currentTime = Math.floor(Date.now() / 1000);
   const isDayTime = determineDayTime(sunrise, sunset, currentTime);
 
   const defaultWeatherCard = {
@@ -248,21 +203,20 @@ function App() {
 
   return (
     <CurrentUserContext.Provider
-      value={{ isLoading, isLoggedIn, setIsLoggedIn, currentUser }}
+      value={{ isLoading, isLoggedIn, currentUser, openModal }}
     >
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <Header
-          openSignUpModal={() => openModal(registerModalName)}
-          openSignInModal={() => openModal(loginModalName)}
+          openSignUpModal={() => openModal(MODAL_NAMES.REGISTER)}
+          openSignInModal={() => openModal(MODAL_NAMES.LOGIN)}
           handleAddItemsButtonClick={handleAddItemsButtonClick}
           location={location}
           toggleMobileMenu={toggleMobileMenu}
           isMobileMenuOpened={isMobileMenuOpened}
           modalIsOpened={modalIsOpened}
         />
-
         <Routes>
           <Route
             path="/"
@@ -286,7 +240,8 @@ function App() {
                   onCardLike: handleCardLike,
                   handleAddItemsButtonClick,
                   handleSignOut,
-                  openEditProfileModal: () => openModal(editProfileModalName),
+                  openEditProfileModal: () =>
+                    openModal(MODAL_NAMES.EDIT_PROFILE),
                 }}
               >
                 <ProtectedRoute>
@@ -302,7 +257,7 @@ function App() {
           onCloseModal={handleCloseModal}
           activeModal={activeModal}
           isLoading={isLoading}
-          registerModalName={registerModalName}
+          registerModalName={MODAL_NAMES.REGISTER}
           handleRegistration={handleRegistration}
         />
         <LoginModal
@@ -310,7 +265,7 @@ function App() {
           onCloseModal={handleCloseModal}
           activeModal={activeModal}
           isLoading={isLoading}
-          loginModalName={loginModalName}
+          loginModalName={MODAL_NAMES.LOGIN}
           handleLogin={handleLogin}
         />
         <EditProfileModal
@@ -318,7 +273,7 @@ function App() {
           onCloseModal={handleCloseModal}
           activeModal={activeModal}
           isLoading={isLoading}
-          editProfileModalName={editProfileModalName}
+          editProfileModalName={MODAL_NAMES.EDIT_PROFILE}
           handleEditProfile={handleEditProfile}
         />
         <AddItemModal
@@ -326,20 +281,20 @@ function App() {
           onAddItem={handleAddItemSubmit}
           onCloseModal={handleCloseModal}
           activeModal={activeModal}
-          addGarmentModalName={addGarmentModalName}
+          addGarmentModalName={MODAL_NAMES.ADD_GARMENT}
           isLoading={isLoading}
         />
         <ItemModal
-          name={itemModalName}
+          name={MODAL_NAMES.ITEM}
           activeModal={activeModal}
           handleCloseModal={handleCloseModal}
           item={modalItem}
-          layout={itemModalLayoutOptions.vertical}
-          openConfirmationModal={() => openModal(deleteConfirmationModalName)}
+          layout={ITEM_MODAL_LAYOUT_OPTIONS.VERTICAL}
+          openConfirmationModal={() => openModal(MODAL_NAMES.DELETE_CONFIRM)}
           isOpen={modalIsOpened}
         />
         <DeleteConfirmationModal
-          name={deleteConfirmationModalName}
+          name={MODAL_NAMES.DELETE_CONFIRM}
           activeModal={activeModal}
           handleCardDelete={handleCardDelete}
           handleCloseModal={handleCloseModal}

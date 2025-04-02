@@ -101,8 +101,8 @@
 
   .header__container--shown {
     display: grid;
-    grid-template-rows: 60px auto auto auto;
-    grid-template-columns: 1fr;
+    grid-template-rows: 40px auto auto auto;
+    grid-template-columns: repeat(4, 1fr);
     position: absolute;
     background-color: #fff;
     left: 16px;
@@ -167,15 +167,23 @@
     opacity: 0.3;
   }
 
-  .header__add-button {
+  .header__signup-button {
+    grid-column: 2;
+  }
+
+  .header__signin-button {
+    grid-column: 3;
+  }
+
+  .header__add-item-button {
     grid-row: 3;
-    grid-column: 1;
+    grid-column: 2 / 4;
     margin: 0 0 24px;
   }
 
   .header__user-info {
     grid-row: 2;
-    grid-column: 1;
+    grid-column: 2 / 4;
     margin-bottom: 24px;
   }
 
@@ -185,15 +193,18 @@
     width: max-content;
   }
 
+  .header__user-icon-container {
+    margin-left: 12px;
+  }
+
   .header__user-icon {
     grid-row: 2;
     grid-column: 1;
-    margin-left: 12px;
   }
 
   .header__toggle {
     grid-row: 4;
-    grid-column: 1;
+    grid-column: 2 / 4;
     margin: 0 auto 40px;
   }
 }

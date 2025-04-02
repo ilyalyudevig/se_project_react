@@ -23,15 +23,15 @@ function SideBar() {
       </div>
       <div className="sidebar__buttons">
         <Button
-          block={"sidebar"}
-          type={"change-profile"}
-          buttonText={"Change profile data"}
+          block="sidebar"
+          element="change-profile"
+          buttonText="Change profile data"
           onClick={openEditProfileModal}
         />
         <Button
-          block={"sidebar"}
-          type={"logout"}
-          buttonText={"Log Out"}
+          block="sidebar"
+          element="logout"
+          buttonText="Log Out"
           onClick={handleSignOut}
         />
       </div>
