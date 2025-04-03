@@ -11,21 +11,24 @@ const RegisterModal = ({
   isLoading,
   registerModalName,
   handleRegistration,
+  switchBtnClass,
+  switchBtnHandler,
+  switchBtnText,
 }) => {
   const { values, setValues, handleChange } = useForm({
-    email: "",
-    password: "",
-    name: "",
-    avatarUrl: "",
+    registerEmail: "",
+    registerPassword: "",
+    registerName: "",
+    registerAvatarUrl: "",
   });
 
   useEffect(() => {
     if (isOpen) {
       setValues(() => ({
-        email: "",
-        password: "",
-        name: "",
-        avatarUrl: "",
+        registerEmail: "",
+        registerPassword: "",
+        registerName: "",
+        registerAvatarUrl: "",
       }));
     }
   }, [isOpen, setValues]);
@@ -44,11 +47,14 @@ const RegisterModal = ({
       activeModal={activeModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      swiswitchBtnClass={switchBtnClass}
+      switchBtnHandler={switchBtnHandler}
+      switchBtnText={switchBtnText}
     >
       <Input
         type="email"
-        label="Email"
-        name="email"
+        label="Email *"
+        name="registerEmail"
         placeholder="Email"
         value={values.email}
         onChange={handleChange}
@@ -56,16 +62,16 @@ const RegisterModal = ({
       />
       <Input
         type="password"
-        label="Password"
-        name="password"
+        label="Password *"
+        name="registerPassword"
         placeholder="Password"
         value={values.password}
         onChange={handleChange}
         required
       />
       <Input
-        label="Name"
-        name="name"
+        label="Name *"
+        name="registerName"
         placeholder="Name"
         value={values.name}
         onChange={handleChange}
@@ -73,7 +79,7 @@ const RegisterModal = ({
       />
       <Input
         label="Avatar URL"
-        name="avatarUrl"
+        name="registerAvatarUrl"
         placeholder="Avatar"
         value={values.avatarUrl}
         onChange={handleChange}

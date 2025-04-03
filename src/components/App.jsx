@@ -46,44 +46,15 @@ function App() {
     setIsMobileMenuOpened((prevState) => !prevState);
   };
 
-  const handleCloseModal = () => {
-    setActiveModal("");
-    setIsMobileMenuOpened(false);
-    setModalIsOpened(false);
-  };
-
   const openModal = (modalName) => {
     setActiveModal(modalName);
     setModalIsOpened(true);
   };
 
-  const handleRegistration = ({ email, password, name, avatarUrl }) => {
-    auth
-      .register(email, password, name, avatarUrl)
-      .then(() => handleLogin({ email, password }))
-      .then(handleCloseModal)
-      .catch(console.error);
-  };
-
-  const handleLogin = ({ email, password }) => {
-    if (!email || !password) return;
-
-    setIsLoading(true);
-    auth
-      .authorize(email, password)
-      .then((data) => {
-        if (data.token) {
-          setToken(data.token);
-          return auth.checkToken(data.token);
-        }
-      })
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .then(handleCloseModal)
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+  const handleCloseModal = () => {
+    setActiveModal("");
+    setIsMobileMenuOpened(false);
+    setModalIsOpened(false);
   };
 
   const handleSignOut = () => {
@@ -95,45 +66,70 @@ function App() {
     openModal(MODAL_NAMES.ADD_GARMENT);
   };
 
-  const handleAddItemSubmit = (name, imageUrl, weather) => {
-    const token = getToken();
+  function handleSubmit(request) {
     setIsLoading(true);
-
-    api
-      .addItem({ name, imageUrl, weather, likes: [] }, token)
-      .then((newItem) => setItems((prevItems) => [newItem, ...prevItems]))
+    request()
       .then(handleCloseModal)
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  };
+  }
 
-  const handleCardDelete = () => {
+  function handleRegistration(inputValues) {
+    function makeRequest() {
+      return auth
+        .register(inputValues)
+        .then(({ name, avatar }) => handleLogin(name, avatar));
+    }
+    handleSubmit(makeRequest);
+  }
+
+  function handleLogin(inputValues) {
+    function makeRequest() {
+      return auth
+        .authorize(inputValues)
+        .then((data) => {
+          if (data.token) {
+            setToken(data.token);
+            return auth.checkToken(data.token);
+          }
+        })
+        .then(setCurrentUser)
+        .then(setIsLoggedIn(true));
+    }
+    handleSubmit(makeRequest);
+  }
+
+  function handleAddItemSubmit(inputValues) {
     const token = getToken();
-    setIsLoading(true);
+    function makeRequest() {
+      return api
+        .addItem({ ...inputValues, likes: [] }, token)
+        .then((newItem) => setItems((prevItems) => [newItem, ...prevItems]));
+    }
+    handleSubmit(makeRequest);
+  }
 
-    api
-      .deleteItem(modalItem._id, token)
-      .then(() => {
+  function handleCardDelete() {
+    const token = getToken();
+
+    function makeRequest() {
+      return api.deleteItem(modalItem._id, token).then(() => {
         setItems((prevItems) =>
           prevItems.filter((item) => item._id !== modalItem._id)
         );
-      })
-      .then(handleCloseModal)
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  };
+      });
+    }
+    handleSubmit(makeRequest);
+  }
 
-  const handleEditProfile = ({ name, avatar }) => {
+  function handleEditProfile(inputValues) {
     const token = getToken();
-    setIsLoading(true);
 
-    api
-      .editProfile(token, { name, avatar })
-      .then((user) => setCurrentUser(user))
-      .then(handleCloseModal)
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  };
+    function makeRequest() {
+      return api.editProfile(token, inputValues).then(setCurrentUser);
+    }
+    handleSubmit(makeRequest);
+  }
 
   const handleCardClick = (e) => {
     const id = e.currentTarget.id;
@@ -259,6 +255,9 @@ function App() {
           isLoading={isLoading}
           registerModalName={MODAL_NAMES.REGISTER}
           handleRegistration={handleRegistration}
+          switchBtnClass="login"
+          switchBtnHandler={() => openModal(MODAL_NAMES.LOGIN)}
+          switchBtnText="Log In"
         />
         <LoginModal
           isOpen={modalIsOpened}
@@ -267,6 +266,9 @@ function App() {
           isLoading={isLoading}
           loginModalName={MODAL_NAMES.LOGIN}
           handleLogin={handleLogin}
+          switchBtnClass="signup"
+          switchBtnHandler={() => openModal(MODAL_NAMES.REGISTER)}
+          switchBtnText="Sign Up"
         />
         <EditProfileModal
           isOpen={modalIsOpened}

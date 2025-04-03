@@ -4,8 +4,6 @@ import Button from "./Button";
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-import { MODAL_NAMES } from "../utils/constants";
-
 function ModalWithForm({
   title,
   name,
@@ -15,8 +13,11 @@ function ModalWithForm({
   activeModal,
   onSubmit,
   children,
+  swiswitchBtnClass,
+  switchBtnHandler,
+  switchBtnText,
 }) {
-  const { isLoggedIn, openModal } = useContext(CurrentUserContext);
+  const { isLoggedIn } = useContext(CurrentUserContext);
 
   return (
     <Modal
@@ -38,14 +39,10 @@ function ModalWithForm({
           {!isLoggedIn && (
             <Button
               block="form"
-              element={title === "Sign Up" ? "login" : "signup"}
+              element={swiswitchBtnClass}
               type="button"
-              onClick={() =>
-                openModal(
-                  title === "Sign Up" ? MODAL_NAMES.LOGIN : MODAL_NAMES.REGISTER
-                )
-              }
-              buttonText={title === "Sign Up" ? "or Log In" : "or Sign Up"}
+              onClick={switchBtnHandler}
+              buttonText={"or " + switchBtnText}
             />
           )}
         </div>

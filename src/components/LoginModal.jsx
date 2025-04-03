@@ -11,6 +11,9 @@ const LoginModal = ({
   isLoading,
   loginModalName,
   handleLogin,
+  switchBtnClass,
+  switchBtnHandler,
+  switchBtnText,
 }) => {
   const { values, setValues, handleChange } = useForm({
     email: "",
@@ -40,10 +43,13 @@ const LoginModal = ({
       activeModal={activeModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      swiswitchBtnClass={switchBtnClass}
+      switchBtnHandler={switchBtnHandler}
+      switchBtnText={switchBtnText}
     >
       <Input
         type="email"
-        label="Email"
+        label="Email *"
         name="email"
         placeholder="Email"
         value={values.email}
@@ -52,7 +58,7 @@ const LoginModal = ({
       />
       <Input
         type="password"
-        label="Password"
+        label="Password *"
         name="password"
         placeholder="Password"
         value={values.password}

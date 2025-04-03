@@ -13,7 +13,7 @@ const AddItemModal = ({
   isLoading,
 }) => {
   const { values, setValues, handleChange } = useForm({
-    name: "",
+    itemName: "",
     imageUrl: "",
     weather: "",
   });
@@ -21,7 +21,7 @@ const AddItemModal = ({
   useEffect(() => {
     if (isOpen) {
       setValues(() => ({
-        name: "",
+        itemName: "",
         imageUrl: "",
         weather: "",
       }));
@@ -30,7 +30,7 @@ const AddItemModal = ({
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddItem(values.name, values.imageUrl, values.weather);
+    onAddItem(values);
   }
 
   return (
@@ -45,12 +45,12 @@ const AddItemModal = ({
     >
       <Input
         label="Name"
-        name="name"
+        name="itemName"
         placeholder="Name"
         minLength="2"
         maxLength="40"
         required
-        value={values.name}
+        value={values.itemName}
         onChange={handleChange}
       />
       <Input

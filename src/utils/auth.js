@@ -1,27 +1,33 @@
 import { baseUrl } from "./constants";
 
-export const register = (email, password, name, avatarUrl) => {
+import { checkResponse } from "./checkResponse";
+
+export const register = (userData) => {
+  const { registerEmail, registerPassword, registerName, registerAvatarUrl } =
+    userData;
+
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password, name, avatar: avatarUrl }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+    body: JSON.stringify({
+      email: registerEmail,
+      password: registerPassword,
+      name: registerName,
+      avatar: registerAvatarUrl,
+    }),
+  }).then(checkResponse);
 };
 
-export const authorize = (email, password) => {
+export const authorize = (credentials) => {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+    body: JSON.stringify(credentials),
+  }).then(checkResponse);
 };
 
 export const checkToken = (token) => {
@@ -31,7 +37,5 @@ export const checkToken = (token) => {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
