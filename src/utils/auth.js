@@ -20,13 +20,13 @@ export const register = (userData) => {
   }).then(checkResponse);
 };
 
-export const authorize = (credentials) => {
+export const authorize = (userData) => {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(credentials),
+    body: JSON.stringify(userData),
   }).then(checkResponse);
 };
 

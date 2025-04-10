@@ -78,7 +78,12 @@ function App() {
     function makeRequest() {
       return auth
         .register(inputValues)
-        .then(({ name, avatar }) => handleLogin(name, avatar));
+        .then(() =>
+          handleLogin({
+            email: inputValues.registerEmail,
+            password: inputValues.registerPassword,
+          })
+        );
     }
     handleSubmit(makeRequest);
   }
