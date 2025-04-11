@@ -8,7 +8,7 @@ const UserIcon = ({ block, avatar, name }) => {
           alt={`${name}'s profile picture`}
         />
       ) : (
-        <p>{name[0]}</p>
+        <p>{name ? name[0] : ""}</p>
       )}
     </div>
   );
