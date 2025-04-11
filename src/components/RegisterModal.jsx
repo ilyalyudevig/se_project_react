@@ -78,7 +78,7 @@ const RegisterModal = ({
         required
       />
       <Input
-        label="Avatar URL"
+        label="Avatar URL *"
         name="registerAvatarUrl"
         placeholder="Avatar"
         value={values.avatarUrl}

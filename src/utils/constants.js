@@ -5,7 +5,10 @@ const coords = {
   longitude: 34.7818,
 };
 
-const baseUrl = "http://localhost:3001";
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.zsh.jp"
+    : "http://localhost:3001";
 
 const MODAL_NAMES = {
   ADD_GARMENT: "garment-form",
